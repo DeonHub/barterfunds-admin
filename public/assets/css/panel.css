@@ -1,0 +1,61 @@
+
+        .buysell {
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Adjust the values for shadow as needed */
+            padding: 20px;
+            border-radius: 10px;
+            /* Adjust padding as needed */
+            /* Other styles */
+        }
+
+
+
+        /* CSS to position the icon on the right side */
+        .form-navigation {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .form-navigation a {
+            display: flex;
+            align-items: center;
+        }
+   
+  
+        .hidden {
+            display: none;
+        }
+
+        .form-stage {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+   
+    
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 20px 0;
+            border-top: 2px solid #000;
+            /* Adjust the color and thickness as needed */
+        }
+
+        .divider-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            /* Set the background color to match your page background */
+            padding: 0 10px;
+            /* Adjust padding as needed */
+            font-size: 14px;
+            /* Adjust font size as needed */
+            color: #000;
+            /* Set the text color */
+        }
+    
