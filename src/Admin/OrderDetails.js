@@ -11,16 +11,16 @@ import PageModal from "../components/PageModal";
 // import OpenModal from "../components/OpenModal";
 import Loader from "../components/Loader";
 
-const TransactionDetails = () => {
+const OrderDetails = () => {
   const navigate = useNavigate();
-  const { transactionId } = useParams();
-  const [transaction, setTransaction] = useState({});
+  const { orderId } = useParams();
+  const [order, setOrder] = useState({});
   const API_URL = process.env.REACT_APP_API_URL;
   const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
-    document.title = "Transaction Details | BarterFunds";
+    document.title = "Order Details | BarterFunds";
     const token = window.sessionStorage.getItem("token");
     
     if (!token) {
@@ -33,19 +33,15 @@ const TransactionDetails = () => {
     };
 
     axios
-      .get(`${API_URL}/transactions/${transactionId}`, { headers: headers })
+      .get(`${API_URL}/orders/${orderId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           // console.log(response.data.user)
-          setTransaction(response.data.transaction);
+          setOrder(response.data.order);
           setIsLoading(false);
-          // setGlobalState((prevState) => ({
-          //   ...prevState,
-          //   currencies: response.data.currencies
-          // }));
-          // console.log(JSON.stringify(response.data))
+
         } else {
-          setTransaction({});
+          setOrder({});
           console.log("No successful");
         }
       })
@@ -106,14 +102,17 @@ const TransactionDetails = () => {
 
   return (
     <div className="page-wrapper default-version">
-      <AdminSidebar active={'transaction'}/>
+      <AdminSidebar active={'order'}/>
       <AdminHeader />
       <>
       {isLoading ? <Loader /> : (
         <div className="body-wrapper">
         <div className="bodywrapper__inner">
           <div className="d-flex mb-30 flex-wrap gap-3 justify-content-between align-items-center">
-            <h6 className="page-title">Transaction #{transaction.transactionId}</h6>
+          <h6 className="page-title">
+  {`${order.userId.firstname} ${order.userId.surname} ${order.action === 'deposit' ? 'made a deposit of' : 'requested a withdrawal of'} ${formatCurrency(order.amountGhs)} GHS`}
+</h6>
+
             <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
               <a
                 href="javascript: history.go(-1)"
@@ -135,92 +134,89 @@ const TransactionDetails = () => {
             <div className="col-xl-8 col-sm-12">
               <div className="card">
                 <div className="card-header d-flex flex-wrap justify-content-between align-items-center">
-                  <h5 className="card-title">Transaction Details</h5>
+                  <h5 className="card-title">Order Details</h5>
                 </div>
                 <div className="card-body">
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
-                      <span className="fw-bold">Transaction ID</span>
-                      <span className="d-block fw-bold">{transaction.transactionId}</span>
+                      <span className="fw-bold">Order ID</span>
+                      <span className="d-block fw-bold">{order.orderId}</span>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Order Type</span>
+                      <span className="d-block fw-bold">{order.action === 'deposit' ? 'Deposit' : 'Withdrawal'}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Reference ID</span>
-                      <span className="d-block fw-bold">{transaction.referenceId ? transaction.referenceId : 'No Reference ID'}</span>
+                      <span className="d-block fw-bold">{order.referenceId ? order.referenceId : 'No Reference ID'}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">User Details</span>
                       <span>
 
-                      <span className="">{transaction.userId.firstname} {transaction.userId.surname}</span><br/>
+                      <span className="">{order.userId.firstname} {order.userId.surname}</span><br/>
                             <span>
                               <a
                                 className="text--primary"
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${transaction.userId._id}`}
+                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${order.userId._id}`}
                               >
-                                <span className="text--primary">@</span>{transaction.userId.username}
+                                <span className="text--primary">@</span>{order.userId.username}
                               </a>
                             </span>
                       </span>
                     </li>
-                    <li className="list-group-item d-flex justify-content-between flex-wrap">
-                      <span className="fw-bold">Transaction Type</span>
-                      <div className="text-end">
-                      <span className="d-block">{capitalizeFirstLetter(transaction.transactionType)}</span>
-                      <span>
-                              <a
-                                className="text--primary"
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/details/${transaction.userId._id}`}
-                              >
-                                <span className="text--primary"></span>{transaction.currencyId ? transaction.currencyId.currencyName : 'Bitcoin (BTC)'}
-                              </a>
-                            </span>
-                            
-                      </div>
-                    </li>
+
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Total Amount</span>
                       <div className="text-end">
-                      <span className="d-block fw-bold">{formatCurrency(transaction.amountGhs)} GHS</span>
-                            <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span>
+                      <span className="d-block fw-bold">{formatCurrency(order.amountGhs)} GHS</span>
+                            <span className="d-block fw-bold">{formatCurrency(order.amountUsd)} USD</span>
+                      </div>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Balance</span>
+                      <div className="text-end">
+                      <span className="d-block fw-bold">{formatCurrency(order.balanceGhs)} GHS</span>
+                            <span className="d-block fw-bold">{formatCurrency(order.balanceGhs)} USD</span>
                       </div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Payment Method</span>
                       <div className="text-end">
-                            <span className="d-block fw-bold">{formatPaymentMethod(transaction.paymentMethod)}</span>
+                            <span className="d-block fw-bold">{formatPaymentMethod(order.paymentMethod)}</span>
                       </div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Payment Number</span>
                       <div className="text-end">
-                            <span className="d-block fw-bold">{transaction.paymentNumber ? transaction.paymentNumber : 'User Wallet Address'}</span>
+                            <span className="d-block fw-bold">{order.paymentNumber ? order.paymentNumber : 'User Wallet Address'}</span>
                       </div>
                     </li>
 
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Reciepient Method</span>
                       <div className="text-end">
-                            <span className="d-block fw-bold">{transaction.walletAddress ? 'User Wallet': formatPaymentMethod(transaction.receipientMethod)}</span>
+                            <span className="d-block fw-bold">{order.walletAddress ? 'User Wallet': formatPaymentMethod(order.receipientMethod)}</span>
                       </div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Reciepient Number</span>
                       <div className="text-end">
-                            <span className="d-block fw-bold">{transaction.walletAddress ? transaction.walletAddress : transaction.receipientNumber}</span>
+                            <span className="d-block fw-bold">{order.walletAddress ? order.walletAddress : order.receipientNumber}</span>
                       </div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold"> Status</span>
                       <div className="text-end">
-                      {transaction.status === "success" ? (
+                      {order.status === "success" ? (
                                     <span className="badge badge--success">
                                       Success
                                     </span>
-                                  ) : transaction.status === "pending" ? (
+                                  ) : order.status === "pending" ? (
                                     <span className="badge badge--primary">
                                       Pending
                                     </span>
-                                  ) : transaction.status === "cancelled" ? (
+                                  ) : order.status === "cancelled" ? (
                                     <span className="badge badge--warning">
                                       Cancelled
                                     </span>
@@ -231,31 +227,26 @@ const TransactionDetails = () => {
                                   )}
                       </div>
                     </li>
-                    <li className="list-group-item d-flex justify-content-between flex-wrap">
-                      <span className="fw-bold">Action</span>
-                      <div className="text-end">
-                      <span className="">{transaction.action}</span>
-                      </div>
-                    </li>
+                    
                     
                     
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
-                      <span className="fw-bold">Transaction Date</span>
+                      <span className="fw-bold">Order Date</span>
                       <div className="text-end">
-                        <span className="d-block">{formatDate(transaction.createdAt)}</span>
-                        <span>{formatTime(transaction.createdAt)}</span>
+                        <span className="d-block">{formatDate(order.createdAt)}</span>
+                        <span>{formatTime(order.createdAt)}</span>
                       </div>
                     </li>
                   </ul>
                 </div>
               </div>
-              {transaction.paymentProof ? (
+              {order.paymentProof ? (
                 <div className="card b-radius--10 overflow-hidden box--shadow1 mt-3">
                 <div className="card-header text-center">
-                  <h5>Transaction Proof</h5>
+                  <h5>Order Proof</h5>
                 </div>
                 <div className="card-body">
-                  <Image src={transaction.paymentProof} />
+                  <Image src={order.paymentProof} />
                   
                 </div>
               </div>
@@ -263,56 +254,41 @@ const TransactionDetails = () => {
                 ''
               )}
               
-              {transaction.status === 'pending' && (
+              {order.status === 'pending' && (
                 <div className="d-flex flex-wrap justify-content-end mb-3 gap-2 mt-5">
-                <PageModal
-                  title={"Confirm Payment"}
-                  content={
-                    "This transaction's payment will be confirmed. Are you sure you want to confirm payment?"
-                  }
-                  action={"Transaction's payment confirmed."}
-                  status={"pending"}
-                  updateUrl={`${API_URL}/transactions/${transaction._id}`}
-                  className={
-                    "btn btn--warning btn-refund flex-grow-1"
-                  }
-                  icon={"fas fa-check-circle"}
-                  setIsLoading={setIsLoading}
-                  redirectTo={"transactions"}
                 
-                />
   
   <PageModal
-                  title={"Approve Transaction"}
+                  title={"Approve Order"}
                   content={
-                    "This transaction will be approved successfully. Are you sure you want to approve transaction?"
+                    "This order will be approved successfully. Are you sure you want to approve order?"
                   }
-                  action={"Transaction succefully approved."}
+                  action={order.action}
                   status={"success"}
-                  updateUrl={`${API_URL}/transactions/${transaction._id}`}
+                  updateUrl={`${API_URL}/orders/${order._id}`}
                   className={
                     "btn btn--success btn-approved flex-grow-1"
                   }
                   icon={"fas fa-check"}
                   setIsLoading={setIsLoading}
-                  redirectTo={"transactions"}
+                  redirectTo={"orders"}
                 
                 />
   
   <PageModal
-                  title={"Cancel Transaction"}
+                  title={"Cancel Order"}
                   content={
-                    "This transaction will be cancelled. Are you sure you want to cancel this transaction?"
+                    "This order will be cancelled. Are you sure you want to cancel this order?"
                   }
-                  action={"Transaction has been cancelled."}
+                  action={order.action}
                   status={"cancelled"}
-                  updateUrl={`${API_URL}/transactions/${transaction._id}`}
+                  updateUrl={`${API_URL}/orders/${order._id}`}
                   className={
                     "btn--danger btn btn-cancel flex-grow-1"
                   }
                   icon={"fas fa-times-circle"}
                   setIsLoading={setIsLoading}
-                  redirectTo={"transactions"}
+                  redirectTo={"orders"}
                 
                 />
                       
@@ -341,4 +317,4 @@ const TransactionDetails = () => {
 
 
 
-export default TransactionDetails;
+export default OrderDetails;

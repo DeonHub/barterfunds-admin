@@ -168,7 +168,18 @@ const Currencies = ({ globalState, setGlobalState }) => {
                                       </span>
                                     )}
                                   </td>
+
                                   <td>
+                            <a
+                              href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/details/${currency._id}`}
+                              className="btn btn-sm btn-outline--primary"
+                            >
+                              <i className="las la-desktop" />
+                              Details
+                            </a>
+                          </td>
+
+                                  {/* <td>
                                     <a
                                       href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/edit-currency/${currency._id}`}
                                       className="btn btn-sm btn-outline--primary"
@@ -196,7 +207,7 @@ const Currencies = ({ globalState, setGlobalState }) => {
                                         setIsLoading={setIsLoading}
                                       />
                                     )}
-                                  </td>
+                                  </td> */}
                                 </tr>
                               ))
                             )}

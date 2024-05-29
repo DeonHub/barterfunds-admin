@@ -24,9 +24,6 @@ import AdminResetPassword from './Admin/AdminResetPassword';
 
 import EditCurrency from './Admin/EditCurrency';
 
-import ExchangeList from './Admin/Transactions';
-import ExchangeDetails from './Admin/TransactionDetails';
-
 import Kycs from './Admin/Kycs';
 import KycDetails from './Admin/KycDetails';
 
@@ -34,14 +31,15 @@ import PaymentGateways from './Admin/PaymentGateways';
 import EditPaymentGateway from './Admin/EditPaymentGateway';
 import CreatePaymentGateway from './Admin/CreatePaymentGateway';
 
-import Withdrawals from './Admin/Withdrawals';
-import WithdrawalDetails from './Admin/WithdrawalDetails';
+import Orders from './Admin/Orders';
+import OrderDetails from './Admin/OrderDetails';
 import Referrals from './Admin/Referrals';
 import Reports from './Admin/Reports';
 import Notifications from './Admin/Notifications';
 
 import TransactionDetails from './Admin/TransactionDetails';
 import Transactions from './Admin/Transactions';
+import CurrencyDetails from './Admin/CurrencyDetails';
 
 
 const App = () => {
@@ -57,55 +55,57 @@ const App = () => {
       <Routes>
  
         {/* Auth routes go here */}
-        <Route path={`${process.env.PUBLIC_URL}/`} element={<Login navigate={navigateTo} />}/>
-        <Route path={`${process.env.PUBLIC_URL}/login`} element={<Login navigate={navigateTo} />}/>
-        <Route path={`${process.env.PUBLIC_URL}/signup`} element={<Signup navigate={navigateTo} />} />
-        <Route path={`${process.env.PUBLIC_URL}/forgot-password`} element={<ForgotPassword navigate={navigateTo} />} />
-        <Route path={`${process.env.PUBLIC_URL}/login/mfa`} element={<TwoFactor navigate={navigateTo} />} />
-        <Route path={`${process.env.PUBLIC_URL}/account-activation/:activationToken`} element={<AccountActivation />} />
-        <Route path={`${process.env.PUBLIC_URL}/reset-password/:resetToken`} element={<ResetPassword />} />
+        <Route path={'/'} element={<Login navigate={navigateTo} />}/>
+        <Route path={'/login'} element={<Login navigate={navigateTo} />}/>
+        <Route path={'/signup'} element={<Signup navigate={navigateTo} />} />
+        <Route path={'/forgot-password'} element={<ForgotPassword navigate={navigateTo} />} />
+        <Route path={'/login/mfa'} element={<TwoFactor navigate={navigateTo} />} />
+        <Route path={'/account-activation/:activationToken'} element={<AccountActivation />} />
+        <Route path={'/reset-password/:resetToken'} element={<ResetPassword />} />
 
         {/* Admin routes go here */}
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/dashboard`} element={<AdminDashboard />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/reset-password`} element={<AdminResetPassword />} />
+        <Route path={'/admin/dashboard'} element={<AdminDashboard />} />
+        <Route path={'/admin/reset-password'} element={<AdminResetPassword />} />
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/users`} element={<Users />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/users/:userId`} element={<UserDetails />} />
+        <Route path={'/admin/users'} element={<Users />} />
+        <Route path={'/admin/users/details/:userId'} element={<UserDetails />} />
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/kycs`} element={<Kycs />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/kycs/:kycId`} element={<KycDetails />} />
-
-
-        <Route path={`${process.env.PUBLIC_URL}/admin/tickets`} element={<Tickets />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/tickets/:ticketId`} element={<TicketDetails />} />
+        <Route path={'/admin/kycs'} element={<Kycs />} />
+        <Route path={'/admin/kycs/details/:kycId'} element={<KycDetails />} />
 
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/currencies`} element={<Currencies />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/currencies/create-currency`} element={<CreateCurrency />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/currencies/edit-currency/:currencyId`} element={<EditCurrency />} />
-
-        <Route path={`${process.env.PUBLIC_URL}/admin/transactions`} element={<Transactions />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/transactions/details/:transactionId`} element={<TransactionDetails />} />
+        <Route path={'/admin/tickets'} element={<Tickets />} />
+        <Route path={'/admin/tickets/details/:ticketId'} element={<TicketDetails />} />
 
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/payment-gateways`} element={<PaymentGateways />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/payment-gateways/create-gateway`} element={<CreatePaymentGateway />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/payment-gateways/edit-gateway/:gatewayId`} element={<EditPaymentGateway />} />
+        <Route path={'/admin/currencies'} element={<Currencies />} />
+        <Route path={'/admin/currencies/create-currency'} element={<CreateCurrency />} />
+        <Route path={'/admin/currencies/edit-currency/:currencyId'} element={<EditCurrency />} />
+        <Route path={'/admin/currencies/details/:currencyId'} element={<CurrencyDetails />} />
 
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/withdrawals`} element={<Withdrawals />} />
-        <Route path={`${process.env.PUBLIC_URL}/admin/withdrawals/details/:withdrawalId`} element={<WithdrawalDetails />} />
+        <Route path={'/admin/transactions'} element={<Transactions />} />
+        <Route path={'/admin/transactions/details/:transactionId'} element={<TransactionDetails />} />
 
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/referrals`} element={<Referrals />} />
+        <Route path={'/admin/payment-gateways'} element={<PaymentGateways />} />
+        <Route path={'/admin/payment-gateways/create-gateway'} element={<CreatePaymentGateway />} />
+        <Route path={'/admin/payment-gateways/edit-gateway/:gatewayId'} element={<EditPaymentGateway />} />
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/reports`} element={<Reports />} />
+
+        <Route path={'/admin/orders'} element={<Orders />} />
+        <Route path={'/admin/orders/details/:orderId'} element={<OrderDetails />} />
 
 
-        <Route path={`${process.env.PUBLIC_URL}/admin/notifications`} element={<Notifications />} />
+        <Route path={'/admin/referrals'} element={<Referrals />} />
 
-        <Route path={`${process.env.PUBLIC_URL}/*`} element={<NotFound />} />
+        <Route path={'/admin/reports'} element={<Reports />} />
+
+
+        <Route path={'/admin/notifications'} element={<Notifications />} />
+
+        <Route path={'/*'} element={<NotFound />} />
 
       </Routes>
     </Router>

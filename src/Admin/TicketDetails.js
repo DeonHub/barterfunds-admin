@@ -120,7 +120,7 @@ const TicketDetails = ({ globalState, setGlobalState }) => {
                     </div>
                   </div>
 
-                  <div className="card-body">
+                  {/* <div className="card-body">
                     <form>
                       <div className="row">
                         <div className="col-md-12">
@@ -187,8 +187,8 @@ const TicketDetails = ({ globalState, setGlobalState }) => {
                       )}
                     </form>
 
-                    <div className="row border border--primary border-radius-3 my-5 mx-2 center">
-                      <div className="col-md-6 border-end text-md-end text-start mb-3 mt-3">
+                    <div className="row bticket bticket--primary bticket-radius-3 my-5 mx-2 center">
+                      <div className="col-md-6 bticket-end text-md-end text-start mb-3 mt-3">
                         <p className="my-3">
                           <span>Submitted By:</span>{" "}
                           <span className="text-muted fw-bold">
@@ -211,10 +211,108 @@ const TicketDetails = ({ globalState, setGlobalState }) => {
                         <p>{ticket.subject}</p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
+
+                  <div className="card-body">
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Ticket ID</span>
+                      <span className="d-block fw-bold">{ticket.ticketId}</span>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">User Details</span>
+                      <span>
+
+                      <span className="">{ticket.userId.firstname} {ticket.userId.surname}</span><br/>
+                            <span>
+                              <a
+                                className="text--primary"
+                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${ticket.userId._id}`}
+                              >
+                                <span className="text--primary">@</span>{ticket.userId.username}
+                              </a>
+                            </span>
+                      </span>
+                    </li>
+
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Category</span>
+                      <span className="d-block fw-bold">{ticket.category}</span>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Subject</span>
+                      <span className="d-block fw-bold">{ticket.subject}</span>
+                    </li>
+
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Description</span>
+                      <span className="d-block ">{ticket.message}</span>
+                    </li>
+                    
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Submitted On</span>
+                      <div className="text-end">
+                        <span className="d-block">{formatDate(ticket.createdAt)}</span>
+                        <span>{formatTime(ticket.createdAt)}</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
                 </div>
               </div>
             </div>
+
+            {ticket.files.length > 0 ? (
+             
+                        <div className="mt-5">
+                          
+                          <div className="text-bold" style={{ color: '#5b6e88'}}>Supporting Document(s)</div>
+                          <div class="row mb-4">
+                          
+                            {ticket.files.map((file, index) => (
+                              <div
+                                className="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-3"
+                                key={index}
+                              >
+                                <p className="text-bold center mb-3">
+                                  {file.description}
+                                </p>
+                                {file.extension}
+
+                                {file.path.split(".").pop().toLowerCase() ===
+                                  "jpg" ||
+                                file.path.split(".").pop().toLowerCase() ===
+                                  "png" ||
+                                file.path.split(".").pop().toLowerCase() ===
+                                  "jpeg" ? (
+                                  <div className="thumb mb-5">
+                                    <div className="avatar-preview center">
+                                      <div>
+                                        <Image
+                                          className="imagePreview"
+                                          // width={500}
+                                          src={file.path}
+                                          style={{
+                                            objectFit: "fill",
+                                          }}
+                                          alt={file.originalName}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <a href={file.path} download>
+                                    Download {file.originalName}
+                                  </a>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
 
             <hr />
             <div className="row">

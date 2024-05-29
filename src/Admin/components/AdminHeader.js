@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import './adminjs';
 
 const AdminHeader = () => {
+  const navigate = useNavigate();
 
- 
+  const handleLogout = () => {
+    // Clear all items from sessionStorage
+    window.sessionStorage.clear();
+
+    // Redirect to login page
+    navigate('/login');
+  };
+
+
     return (
       <>
-  {/* navbar-wrapper start */}
   <nav className="navbar-wrapper bg--dark">
     <div className="navbar__left">
       <button type="button" className="res-sidebar-open-btn me-3">
@@ -304,8 +313,9 @@ const AdminHeader = () => {
               <span className="dropdown-menu__caption">Password Reset</span>
             </a>
             <a
-              href="logout.html"
+              href="javascript:void(0);"
               className="dropdown-menu__item d-flex align-items-center px-3 py-2"
+              onClick={handleLogout}
             >
               <i className="dropdown-menu__icon las la-sign-out-alt" />
               <span className="dropdown-menu__caption">Logout</span>

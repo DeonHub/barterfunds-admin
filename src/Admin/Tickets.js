@@ -32,7 +32,8 @@ const Tickets = ({ globalState, setGlobalState }) => {
       .get(`${API_URL}/tickets`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          setTickets(response.data.tickets);
+          const sortedTickets = response.data.tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setTickets(sortedTickets);
           // console.log(response.data.tickets);
           setIsLoading(false);
         } else {
@@ -56,8 +57,8 @@ const Tickets = ({ globalState, setGlobalState }) => {
   };
 
   const filteredData = tickets.filter(
-    (ticket) => ticket.ticketId.toLowerCase().includes(searchTerm.toLowerCase())
-    // ticket.surname.toLowerCase().includes(searchTerm.toLowerCase())
+    (ticket) => ticket.ticketId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    ticket.userId.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Calculate pagination
@@ -113,8 +114,8 @@ const Tickets = ({ globalState, setGlobalState }) => {
                     name="search"
                     className="form-control bg--white text-white"
                     placeholder="Search..."
-                    // value={searchTerm}
-                    // onChange={handleSearchChange}
+                    value={searchTerm}
+                    onChange={handleSearchChange}
                   />
                   <button className="btn btn--primary" type="submit">
                     <i className="la la-search" />
@@ -148,18 +149,27 @@ const Tickets = ({ globalState, setGlobalState }) => {
                             currentPageData.map((ticket) => (
                               <tr key={ticket._id}>
                                 <td>
-                                  <a href="" class="fw-bold">
-                                    {ticket.ticketId}
-                                  </a>
+                                <span className="name fw-bold">
+                                        {ticket.ticketId}<br/>
+                                        <small className="text--primary">
+                              {ticket.category}
+                            </small>
+                                      </span>
                                 </td>
                                 <td>
                                   <p class="fw-bold">{ticket.subject}</p>
                                 </td>
                                 <td>
-                                  <p class="fw-bold">
-                                    {ticket.userId.firstname}{" "}
-                                    {ticket.userId.surname}
-                                  </p>
+                                <span className="d-block">{ticket.userId.firstname} {ticket.userId.surname}</span>
+                            <span>
+                              
+                              <a
+                                className="text--primary"
+                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${ticket.userId._id}`}
+                              >
+                                <span className="text--primary">@</span>{ticket.userId.username}
+                              </a>
+                            </span>
                                 </td>
 
                                 <td>
@@ -187,7 +197,7 @@ const Tickets = ({ globalState, setGlobalState }) => {
                                 </td>
                                 <td>
                                   <a
-                                    href={`${process.env.REACT_APP_PUBLIC_URL}/admin/tickets/${ticket._id}`}
+                                    href={`${process.env.REACT_APP_PUBLIC_URL}/admin/tickets/details/${ticket._id}`}
                                     className="btn btn-sm btn-outline--primary"
                                   >
                                     <i className="las la-desktop" />

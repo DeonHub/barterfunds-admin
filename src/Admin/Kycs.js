@@ -211,7 +211,7 @@ const Kycs = ({ globalState, setGlobalState }) => {
                                 </td>
                                 <td>
                                   <a
-                                    href={`${process.env.REACT_APP_PUBLIC_URL}/admin/kycs/${kyc._id}`}
+                                    href={`${process.env.REACT_APP_PUBLIC_URL}/admin/kycs/details/${kyc._id}`}
                                     className="btn btn-sm btn-outline--primary"
                                   >
                                     <i className="las la-desktop" />

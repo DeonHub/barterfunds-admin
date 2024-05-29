@@ -23,7 +23,8 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
 
     const body ={
       status: status,
-      comments: comments
+      comments: comments ? comments : "",
+      action: action ? action : ''
     }
 
 

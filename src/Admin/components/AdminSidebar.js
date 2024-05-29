@@ -60,12 +60,12 @@ class AdminSidebar extends React.Component {
                 </a>
               </li>
 
-              <li className={`sidebar-menu-item ${this.props.active === 'gateway' ? 'active' : ''}`}>
+              {/* <li className={`sidebar-menu-item ${this.props.active === 'gateway' ? 'active' : ''}`}>
                 <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/payment-gateways`} className="nav-link">
                   <i className="menu-icon las la-credit-card" />
                   <span className="menu-title">Payment Gateways</span>
                 </a>
-              </li>
+              </li> */}
 
               <li className={`sidebar-menu-item ${this.props.active === 'transaction' ? 'active' : ''}`}>
                 <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/transactions`} className="">
@@ -73,10 +73,10 @@ class AdminSidebar extends React.Component {
                   <span className="menu-title">Transactions</span>
                 </a>
               </li>
-              <li className={`sidebar-menu-item ${this.props.active === 'withdrawal' ? 'active' : ''}`}>
-                <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/withdrawals`} className="">
+              <li className={`sidebar-menu-item ${this.props.active === 'order' ? 'active' : ''}`}>
+                <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/orders`} className="">
                   <i className="menu-icon la la-bank" />
-                  <span className="menu-title">Withdrawals </span>
+                  <span className="menu-title">Orders </span>
                 </a>
               </li>
               

@@ -15,6 +15,11 @@ const UserDetails = ({ globalState, setGlobalState }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [user, setUser] = useState({});
+  const [totalTransactions, setTotalTransactions] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [totalSupportTickets, setTotalSupportTickets] = useState(0);
+  const [wallet, setWallet] = useState({});
+
   const API_URL = globalState.api_url;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,6 +42,10 @@ const UserDetails = ({ globalState, setGlobalState }) => {
         if (response.data.success) {
           // console.log(response.data.user)
           setUser(response.data.user);
+          setTotalTransactions(response.data.totalTransactions)
+          setTotalOrders(response.data.totalOrders)
+          setTotalSupportTickets(response.data.totalSupportTickets)
+          setWallet(response.data.wallet)
           setIsLoading(false);
           // setGlobalState((prevState) => ({
           //   ...prevState,
@@ -53,6 +62,37 @@ const UserDetails = ({ globalState, setGlobalState }) => {
         console.log("No successful");
       });
   }, []);
+
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  const formatTime = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const amPM = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12 || 12;
+    hours = hours.toString().padStart(2, "0");
+
+    return `${hours}:${minutes} ${amPM}`;
+  };
+
+  const formatCurrency = (value) => {
+    const number = Number(value);
+
+    if (!Number.isFinite(number)) {
+      return "Invalid number";
+    }
+
+    return number.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
 
   return (
     <div className="page-wrapper default-version">
@@ -84,7 +124,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                           <i className="las la-money-bill-wave-alt" />
                         </div>
                         <div className="widget-two__content">
-                          <h3 className="text-white">₵0.00</h3>
+                          <h3 className="text-white">{formatCurrency(wallet ? wallet.balanceGhs : '0.00')} GHS</h3>
                           <p className="text-white">Balance</p>
                         </div>
                         <a href="#" className="widget-two__btn">
@@ -99,7 +139,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                           <i className="las la-sync" />
                         </div>
                         <div className="widget-two__content">
-                          <h3 className="text-white">0</h3>
+                          <h3 className="text-white">{totalTransactions}</h3>
                           <p className="text-white">Transactions</p>
                         </div>
                         <a
@@ -116,11 +156,11 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                           <i className="fas fa-wallet" />
                         </div>
                         <div className="widget-two__content">
-                          <h3 className="text-white">₵0.00</h3>
-                          <p className="text-white">Withdrawals</p>
+                          <h3 className="text-white">{totalOrders}</h3>
+                          <p className="text-white">Orders</p>
                         </div>
                         <a
-                          href={`${process.env.REACT_APP_PUBLIC_URL}/admin/withdrawals?userId=${user._id}`}
+                          href={`${process.env.REACT_APP_PUBLIC_URL}/admin/orders?userId=${user._id}`}
                           className="widget-two__btn"
                         >
                           View All
@@ -134,7 +174,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                           <i className="la la-ticket" />
                         </div>
                         <div className="widget-two__content">
-                          <h3 className="text-white">0</h3>
+                          <h3 className="text-white">{totalSupportTickets}</h3>
                           <p className="text-white">Support Tickets</p>
                         </div>
                         <a
