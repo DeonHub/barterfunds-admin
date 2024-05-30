@@ -44,7 +44,7 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
           // setConfirmPassword("");
 
           setTimeout(() => {
-            window.location.href = `${process.env.PUBLIC_URL}/admin/${redirectTo}`;
+            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/admin/${redirectTo}`;
           }, 2000);
         }
       })

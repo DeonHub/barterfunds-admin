@@ -48,15 +48,14 @@ const TextInput = ({
         </div>
         <div className="form-control-wrap">
           {inputtype === "password" && showEye ? (
-            <a
-              href="#"
+            <span
               className="form-icon form-icon-right passcode-switch lg"
               data-target="password"
               onClick={togglePasswordVisibility}
             >
               <span class="passcode-icon icon-show material-symbols-outlined">visibility</span>
               <span class="passcode-icon icon-hide material-symbols-outlined">visibility_off</span>
-            </a>
+            </span>
           ) : (
             ""
           )}

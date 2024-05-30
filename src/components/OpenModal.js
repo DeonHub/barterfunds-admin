@@ -4,7 +4,7 @@ import { Modal, Button } from "antd";
 import openNotification from "./OpenNotification";
 import axios from "axios";
 
-const OpenModal = ({ title, content, updateUrl, status, action, setIsLoading={setIsLoading}, extraClass }) => {
+const OpenModal = ({ title, content, updateUrl, status, action, setIsLoading, extraClass }) => {
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
@@ -41,7 +41,7 @@ const OpenModal = ({ title, content, updateUrl, status, action, setIsLoading={se
           // setConfirmPassword("");
 
           setTimeout(() => {
-            window.location.href = `${process.env.PUBLIC_URL}/admin/currencies`;
+            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/admin/currencies`;
           }, 2000);
         }
       })
