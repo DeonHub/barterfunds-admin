@@ -120,12 +120,6 @@ class Login extends React.Component {
             window.sessionStorage.setItem("email", email);
             // window.sessionStorage.setItem("userId", response.data.user._id);
 
-            this.props.setGlobalState((prevState) => ({
-              ...prevState,
-              user: response.data.user,
-              isAuthenticated: true,
-              token: token,
-            }));
 
             setTimeout(() => {
               this.props.navigate(`/admin/dashboard`);

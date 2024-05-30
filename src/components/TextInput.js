@@ -52,6 +52,7 @@ const TextInput = ({
               className="form-icon form-icon-right passcode-switch lg"
               data-target="password"
               onClick={togglePasswordVisibility}
+              style={{ cursor: 'pointer'}}
             >
               <span class="passcode-icon icon-show material-symbols-outlined">visibility</span>
               <span class="passcode-icon icon-hide material-symbols-outlined">visibility_off</span>
