@@ -56,7 +56,7 @@ const ForgotPassword = () => {
               <div className="nk-block nk-block-middle nk-auth-body wide-xs">
                 <div className="brand-logo pb-4 text-center">
                   <a
-                    href={`${process.env.REACT_APP_PUBLIC_URL}/`}
+                    href={`/`}
                     className="logo-link"
                   >
                     <img
@@ -108,7 +108,7 @@ const ForgotPassword = () => {
                       </form>
 
                       <div className="form-note-s2 text-center pt-4">
-                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/login`}>
+                        <a href={`/login`}>
                           <strong>Return to Login</strong>
                         </a>
                       </div>

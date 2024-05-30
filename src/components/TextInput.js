@@ -38,7 +38,7 @@ const TextInput = ({
           {inputtype === "password" && showForgotPassword ? (
             <a
               className="link link-primary link-sm"
-              href={`${process.env.PUBLIC_URL}/forgot-password`}
+              href={`/forgot-password`}
             >
               Forgot Password?
             </a>

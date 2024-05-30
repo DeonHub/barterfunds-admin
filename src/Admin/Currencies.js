@@ -102,7 +102,7 @@ const Currencies = () => {
                   <a
                     className="btn btn-outline--primary ml-5"
                     style={{ marginLeft: "10px" }}
-                    href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/create-currency`}
+                    href={`/admin/currencies/create-currency`}
                   >
                     <i className="las la-plus" />
                     Add New
@@ -167,7 +167,7 @@ const Currencies = () => {
 
                                   <td>
                             <a
-                              href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/details/${currency._id}`}
+                              href={`/admin/currencies/details/${currency._id}`}
                               className="btn btn-sm btn-outline--primary"
                             >
                               <i className="las la-desktop" />
@@ -177,7 +177,7 @@ const Currencies = () => {
 
                                   {/* <td>
                                     <a
-                                      href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/edit-currency/${currency._id}`}
+                                      href={`/admin/currencies/edit-currency/${currency._id}`}
                                       className="btn btn-sm btn-outline--primary"
                                     >
                                       <i className="la la-pencil" />

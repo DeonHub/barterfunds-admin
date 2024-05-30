@@ -193,7 +193,7 @@ const Users = () => {
                                 </td>
                                 <td>
                                   <a
-                                    href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${user._id}`}
+                                    href={`/admin/users/details/${user._id}`}
                                     className="btn btn-sm btn-outline--primary"
                                   >
                                     <i className="las la-desktop" />

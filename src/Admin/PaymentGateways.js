@@ -30,7 +30,7 @@ const PaymentGateways = () => {
           </button>
         </div>
       </form>
-      <a className="btn btn-outline--primary ml-5" style={{ marginLeft: "10px"}} href={`${process.env.REACT_APP_PUBLIC_URL}/admin/payment-gateways/create-gateway`}>
+      <a className="btn btn-outline--primary ml-5" style={{ marginLeft: "10px"}} href={`/admin/payment-gateways/create-gateway`}>
         <i className="las la-plus" />
         Add New
       </a>
@@ -65,7 +65,7 @@ const PaymentGateways = () => {
                     <td>
                       <div className="button--group">
                         <a
-                          href={`${process.env.REACT_APP_PUBLIC_URL}/admin/payment-gateways/edit-gateway/1234567890`}
+                          href={`/admin/payment-gateways/edit-gateway/1234567890`}
                           className="btn btn-sm btn-outline--primary editGatewayBtn"
                         >
                           <i className="la la-pencil" />

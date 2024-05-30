@@ -316,7 +316,7 @@ const CurrencyDetails = () => {
       
               <div className="d-flex flex-wrap justify-content-end mb-3 gap-2 mt-5">
                   <a
-                                      href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/edit-currency/${currency._id}`}
+                                      href={`/admin/currencies/edit-currency/${currency._id}`}
                                       className="btn-refund flex-grow-1"
                                     >
                    <button

@@ -155,7 +155,7 @@ const TransactionDetails = () => {
                             <span>
                               <a
                                 className="text--primary"
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${transaction.userId._id}`}
+                                href={`/admin/users/details/${transaction.userId._id}`}
                               >
                                 <span className="text--primary">@</span>{transaction.userId.username}
                               </a>
@@ -169,7 +169,7 @@ const TransactionDetails = () => {
                       <span>
                               <a
                                 className="text--primary"
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/details/${transaction.userId._id}`}
+                                href={`/admin/currencies/details/${transaction.userId._id}`}
                               >
                                 <span className="text--primary"></span>{transaction.currencyId ? transaction.currencyId.currencyName : 'Bitcoin (BTC)'}
                               </a>

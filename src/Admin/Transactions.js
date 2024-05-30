@@ -207,7 +207,7 @@ const Transactions = () => {
                               
                               <a
                                 className="text--primary"
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${transaction.userId._id}`}
+                                href={`/admin/users/details/${transaction.userId._id}`}
                               >
                                 <span className="text--primary">@</span>{transaction.userId.username}
                               </a>
@@ -248,7 +248,7 @@ const Transactions = () => {
                                 </td>
                           <td>
                             <a
-                              href={`${process.env.REACT_APP_PUBLIC_URL}/admin/transactions/details/${transaction._id}`}
+                              href={`/admin/transactions/details/${transaction._id}`}
                               className="btn btn-sm btn-outline--primary"
                             >
                               <i className="las la-desktop" />

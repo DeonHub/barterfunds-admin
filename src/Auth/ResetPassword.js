@@ -49,7 +49,7 @@ const ResetPassword = ({ globalState }) => {
           setConfirmPassword("");
 
           setTimeout(() => {
-            navigate(`${process.env.REACT_APP_PUBLIC_URL}/login`);
+            navigate(`/login`);
           }, 2000);
         }
       })
@@ -61,7 +61,7 @@ const ResetPassword = ({ globalState }) => {
           error.response.data.message
         );
 
-        navigate(`${process.env.REACT_APP_PUBLIC_URL}/forgot-password`);
+        navigate(`/forgot-password`);
 
         console.log("error :>> ", error.response.data.message);
       });
@@ -78,7 +78,7 @@ const ResetPassword = ({ globalState }) => {
             <div className="nk-content ">
               <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
                 <div className="brand-logo pb-4 text-center">
-                  <a href={`${process.env.REACT_APP_PUBLIC_URL}/`} className="logo-link">
+                  <a href={`/`} className="logo-link">
                     <img
                       className="logo-dark logo-img logo-img-lg"
                       src="/assets/images/barterfunds-logo.png"
@@ -134,7 +134,7 @@ const ResetPassword = ({ globalState }) => {
                     </form>
                     <div className="form-note-s2 text-center pt-4">
                       Remember your password?
-                      <a href={`${process.env.REACT_APP_PUBLIC_URL}/login`}> Login</a>
+                      <a href={`/login`}> Login</a>
                     </div>
                   </div>
                 </div>

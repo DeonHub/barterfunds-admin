@@ -31,7 +31,7 @@ const Referrals = () => {
             </button>
           </div>
         </form>
-        <a className="btn btn-outline--primary ml-5" style={{ marginLeft: "10px"}} href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies/create-currency`}>
+        <a className="btn btn-outline--primary ml-5" style={{ marginLeft: "10px"}} href={`/admin/currencies/create-currency`}>
           <i className="las la-undo" />
           Referral Settings
         </a>

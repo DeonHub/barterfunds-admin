@@ -115,7 +115,7 @@ const CreateCurrency = ({ globalState }) => {
           // setConfirmPassword("");
 
           setTimeout(() => {
-            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/admin/currencies`;
+            window.location.href = `/admin/currencies`;
           }, 2000);
         }
       })

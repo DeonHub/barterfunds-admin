@@ -128,7 +128,7 @@ class Login extends React.Component {
             }));
 
             setTimeout(() => {
-              this.props.navigate(`${process.env.REACT_APP_PUBLIC_URL}/admin/dashboard`);
+              this.props.navigate(`/admin/dashboard`);
             }, 1000);
           }
         })
@@ -182,7 +182,7 @@ class Login extends React.Component {
                   <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
                     <div className="brand-logo pb-4 text-center">
                       <a
-                        href={`${process.env.REACT_APP_PUBLIC_URL}/`}
+                        href={`$/`}
                         className="logo-link"
                       >
                         <img
@@ -245,7 +245,7 @@ class Login extends React.Component {
                         </form>
                         {/* <div className="form-note-s2 text-center pt-4">
                           New on our platform?
-                          <a href={`${process.env.REACT_APP_PUBLIC_URL}/signup`}>
+                          <a href={`/signup`}>
                             {" "}
                             Create an account
                           </a>

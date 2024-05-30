@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ active }) => {
   return (
 
     <div>
@@ -12,28 +12,28 @@ const AdminSidebar = () => {
       </button>
       <div className="sidebar__inner">
         <div className="sidebar__logo">
-          <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/dashboard`} className="sidebar__main-logo">
+          <a href={`/admin/dashboard`} className="sidebar__main-logo">
             <img src="/assets/images/logo-dark.png" alt="sidebar logo" />
           </a>
         </div>
         <div className="sidebar__menu-wrapper" id="sidebar__menuWrapper">
           <ul className="sidebar__menu">
-            <li className={`sidebar-menu-item ${this.props.active === 'dashboard' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/dashboard`} className="nav-link ">
+            <li className={`sidebar-menu-item ${active === 'dashboard' ? 'active' : ''}`}>
+              <a href={`/admin/dashboard`} className="nav-link ">
                 <i className="menu-icon las la-home" />
                 <span className="menu-title">Dashboard</span>
               </a>
             </li>
-            <li className={`sidebar-menu-item ${this.props.active === 'users' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users`} className="">
+            <li className={`sidebar-menu-item ${active === 'users' ? 'active' : ''}`}>
+              <a href={`/admin/users`} className="">
                 <i className="menu-icon las la-users" />
                 <span className="menu-title">Users</span>
               </a>
             </li>
 
-            <li className={`sidebar-menu-item ${this.props.active === 'currency' ? 'active' : ''}`}>
+            <li className={`sidebar-menu-item ${active === 'currency' ? 'active' : ''}`}>
               <a
-                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/currencies`}
+                href={`/admin/currencies`}
                 className="nav-link"
               >
                 <i className="menu-icon las la-money-bill" />
@@ -41,50 +41,50 @@ const AdminSidebar = () => {
               </a>
             </li>
 
-            <li className={`sidebar-menu-item ${this.props.active === 'kyc' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/kycs`} className="">
+            <li className={`sidebar-menu-item ${active === 'kyc' ? 'active' : ''}`}>
+              <a href={`/admin/kycs`} className="">
                 <i className="menu-icon las la-address-card"></i>
                 <span className="menu-title">KYCs</span>
               </a>
             </li>
 
             {/* <li className={`sidebar-menu-item ${this.props.active === 'gateway' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/payment-gateways`} className="nav-link">
+              <a href={`/admin/payment-gateways`} className="nav-link">
                 <i className="menu-icon las la-credit-card" />
                 <span className="menu-title">Payment Gateways</span>
               </a>
             </li> */}
 
-            <li className={`sidebar-menu-item ${this.props.active === 'transaction' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/transactions`} className="">
+            <li className={`sidebar-menu-item ${active === 'transaction' ? 'active' : ''}`}>
+              <a href={`/admin/transactions`} className="">
                 <i className="menu-icon las la-exchange-alt" />
                 <span className="menu-title">Transactions</span>
               </a>
             </li>
-            <li className={`sidebar-menu-item ${this.props.active === 'order' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/orders`} className="">
+            <li className={`sidebar-menu-item ${active === 'order' ? 'active' : ''}`}>
+              <a href={`/admin/orders`} className="">
                 <i className="menu-icon la la-bank" />
                 <span className="menu-title">Orders </span>
               </a>
             </li>
             
-            <li className={`sidebar-menu-item ${this.props.active === 'tickets' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/tickets`} className="">
+            <li className={`sidebar-menu-item ${active === 'tickets' ? 'active' : ''}`}>
+              <a href={`/admin/tickets`} className="">
                 <i className="menu-icon la la-ticket" />
                 <span className="menu-title">Support Tickets</span>
               </a>
             </li>
 
-            <li className={`sidebar-menu-item ${this.props.active === 'referral' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/referrals`} className="">
+            <li className={`sidebar-menu-item ${active === 'referral' ? 'active' : ''}`}>
+              <a href={`/admin/referrals`} className="">
               <i className="menu-icon las la-comments-dollar" />
                 <span className="menu-title">Referrals</span>
               </a>
             </li>
 
 
-            <li className={`sidebar-menu-item ${this.props.active === 'report' ? 'active' : ''}`}>
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/reports`} className="">
+            <li className={`sidebar-menu-item ${active === 'report' ? 'active' : ''}`}>
+              <a href={`/admin/reports`} className="">
                 <i className="menu-icon la la-list" />
                 <span className="menu-title">Activity Log</span>
               </a>

@@ -155,7 +155,7 @@ const OrderDetails = () => {
                             <span>
                               <a
                                 className="text--primary"
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${order.userId._id}`}
+                                href={`/admin/users/details/${order.userId._id}`}
                               >
                                 <span className="text--primary">@</span>{order.userId.username}
                               </a>

@@ -64,7 +64,7 @@ const AdminResetPassword = () => {
           setConfirmPassword("");
 
           setTimeout(() => {
-            navigate(`${process.env.REACT_APP_PUBLIC_URL}/login`);
+            navigate(`/login`);
           }, 2000);
         }
       })
@@ -76,7 +76,7 @@ const AdminResetPassword = () => {
           error.response.data.message
         );
 
-        navigate(`${process.env.REACT_APP_PUBLIC_URL}/forgot-password`);
+        navigate(`/forgot-password`);
 
         console.log("error :>> ", error.response.data.message);
       });

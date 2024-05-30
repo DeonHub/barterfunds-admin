@@ -143,7 +143,7 @@ const UserDetails = () => {
                           <p className="text-white">Transactions</p>
                         </div>
                         <a
-                          href={`${process.env.REACT_APP_PUBLIC_URL}/admin/transactions?userId=${user._id}`}
+                          href={`/admin/transactions?userId=${user._id}`}
                           className="widget-two__btn"
                         >
                           View All
@@ -160,7 +160,7 @@ const UserDetails = () => {
                           <p className="text-white">Orders</p>
                         </div>
                         <a
-                          href={`${process.env.REACT_APP_PUBLIC_URL}/admin/orders?userId=${user._id}`}
+                          href={`/admin/orders?userId=${user._id}`}
                           className="widget-two__btn"
                         >
                           View All
@@ -178,7 +178,7 @@ const UserDetails = () => {
                           <p className="text-white">Support Tickets</p>
                         </div>
                         <a
-                          href={`${process.env.REACT_APP_PUBLIC_URL}/admin/tickets?userId=${user._id}`}
+                          href={`/admin/tickets?userId=${user._id}`}
                           className="widget-two__btn"
                         >
                           View All

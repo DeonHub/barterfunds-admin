@@ -161,7 +161,7 @@ const Tickets = () => {
                               
                               <a
                                 className="text--primary"
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/admin/users/details/${ticket.userId._id}`}
+                                href={`/admin/users/details/${ticket.userId._id}`}
                               >
                                 <span className="text--primary">@</span>{ticket.userId.username}
                               </a>
@@ -193,7 +193,7 @@ const Tickets = () => {
                                 </td>
                                 <td>
                                   <a
-                                    href={`${process.env.REACT_APP_PUBLIC_URL}/admin/tickets/details/${ticket._id}`}
+                                    href={`/admin/tickets/details/${ticket._id}`}
                                     className="btn btn-sm btn-outline--primary"
                                   >
                                     <i className="las la-desktop" />

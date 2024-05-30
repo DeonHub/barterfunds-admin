@@ -79,7 +79,7 @@ const AdminHeader = () => {
 
             </div>
             <div className="dropdown-menu__footer">
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/admin/notifications`} className="view-all-message">
+              <a href={`/admin/notifications`} className="view-all-message">
                 View all notification
               </a>
             </div>
@@ -115,7 +115,7 @@ const AdminHeader = () => {
               <span className="dropdown-menu__caption">Profile</span>
             </a>
             <a
-              href={`${process.env.REACT_APP_PUBLIC_URL}/admin/reset-password`} 
+              href={`/admin/reset-password`} 
               className="dropdown-menu__item d-flex align-items-center px-3 py-2"
             >
               <i className="dropdown-menu__icon las la-key" />
