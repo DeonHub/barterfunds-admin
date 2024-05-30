@@ -53,7 +53,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
- 
+
         {/* Auth routes go here */}
         <Route path={'/'} element={<Login navigate={navigateTo} />}/>
         <Route path={'/login'} element={<Login navigate={navigateTo} />}/>
