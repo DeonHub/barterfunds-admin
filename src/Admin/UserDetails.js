@@ -3,15 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
-import { Image, Avatar } from "antd";
+import { Avatar } from "antd";
 import axios from "axios";
 import { UserOutlined } from "@ant-design/icons";
 import PageModal from "../components/PageModal";
-// import OpenModal from "../components/OpenModal";
 import Loader from "../components/Loader";
 
-const UserDetails = ({ globalState, setGlobalState }) => {
+const UserDetails = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [user, setUser] = useState({});
@@ -19,8 +17,6 @@ const UserDetails = ({ globalState, setGlobalState }) => {
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalSupportTickets, setTotalSupportTickets] = useState(0);
   const [wallet, setWallet] = useState({});
-
-  const API_URL = globalState.api_url;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -37,7 +33,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
     };
 
     axios
-      .get(`${API_URL}/users/${userId}`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/users/${userId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           // console.log(response.data.user)
@@ -61,25 +57,25 @@ const UserDetails = ({ globalState, setGlobalState }) => {
         console.log(error);
         console.log("No successful");
       });
-  }, []);
+  }, [navigate, userId]);
 
-  const formatDate = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString("en-US", options);
-  };
+  // const formatDate = (dateTimeString) => {
+  //   const date = new Date(dateTimeString);
+  //   const options = { year: "numeric", month: "long", day: "numeric" };
+  //   return date.toLocaleDateString("en-US", options);
+  // };
 
-  const formatTime = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    let hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    const amPM = hours >= 12 ? "PM" : "AM";
+  // const formatTime = (dateTimeString) => {
+  //   const date = new Date(dateTimeString);
+  //   let hours = date.getHours();
+  //   const minutes = date.getMinutes().toString().padStart(2, "0");
+  //   const amPM = hours >= 12 ? "PM" : "AM";
 
-    hours = hours % 12 || 12;
-    hours = hours.toString().padStart(2, "0");
+  //   hours = hours % 12 || 12;
+  //   hours = hours.toString().padStart(2, "0");
 
-    return `${hours}:${minutes} ${amPM}`;
-  };
+  //   return `${hours}:${minutes} ${amPM}`;
+  // };
 
   const formatCurrency = (value) => {
     const number = Number(value);
@@ -94,6 +90,10 @@ const UserDetails = ({ globalState, setGlobalState }) => {
     });
   }
 
+  const handleBack = () => {
+    navigate(-1);  // Go back to the previous page
+  };
+
   return (
     <div className="page-wrapper default-version">
       <AdminSidebar active={"users"} />
@@ -107,12 +107,12 @@ const UserDetails = ({ globalState, setGlobalState }) => {
               <div className="d-flex mb-30 flex-wrap gap-3 justify-content-between align-items-center">
                 <h6 className="page-title">User Details - {user.firstname} {user.surname}</h6>
                 <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-                  <a
-                    href="javascript: history.go(-1)"
+                  <button
+                    onClick={handleBack}
                     className="btn btn-sm btn-outline--primary"
                   >
                     <i className="la la-undo" /> Back
-                  </a>
+                  </button>
                 </div>
               </div>
               <div className="row">
@@ -127,9 +127,9 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                           <h3 className="text-white">{formatCurrency(wallet ? wallet.balanceGhs : '0.00')} GHS</h3>
                           <p className="text-white">Balance</p>
                         </div>
-                        <a href="#" className="widget-two__btn">
+                        <span className="widget-two__btn">
                           View All
-                        </a>
+                        </span>
                       </div>
                     </div>
 
@@ -355,15 +355,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                               Logins
                             </a>
                           </div>
-                          {/* <div className="flex-fill">
-                          <a
-                            href="admin/users/notification-log/2365"
-                            className="btn btn--secondary btn--shadow w-100 btn-lg"
-                          >
-                            <i className="las la-bell" />
-                            Notifications
-                          </a>
-                        </div> */}
+                         
 
                           <div className="flex-fill">
                             {user.status === "inactive" ? (
@@ -373,7 +365,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                                   "User will be able to access his/her dashboard. Are you sure you want to activate user?"
                                 }
                                 action={"activate"}
-                                updateUrl={`${API_URL}/users/${user._id}`}
+                                updateUrl={`${process.env.REACT_APP_API_URL}/users/${user._id}`}
                                 status={"active"}
                                 className={
                                   "btn btn--success btn--shadow w-100 btn-lg"
@@ -393,7 +385,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                                 }
                                 icon={"las la-user-slash"}
                                 action={"deactivate"}
-                                updateUrl={`${API_URL}/users/${user._id}`}
+                                updateUrl={`${process.env.REACT_APP_API_URL}/users/${user._id}`}
                                 status={"inactive"}
                                 setIsLoading={setIsLoading}
                                 redirectTo={"users"}
@@ -409,7 +401,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                                   "User will be able to access his/her dashboard. Are you sure you want to unblock user?"
                                 }
                                 action={"unblock"}
-                                updateUrl={`${API_URL}/users/${user._id}`}
+                                updateUrl={`${process.env.REACT_APP_API_URL}/users/${user._id}`}
                                 status={"inactive"}
                                 className={
                                   "btn btn-secondary btn--shadow w-100 btn-lg"
@@ -426,7 +418,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                                   "User won't be able to access his/her dashboard. Are you sure you want to block user?"
                                 }
                                 action={"block"}
-                                updateUrl={`${API_URL}/users/${user._id}`}
+                                updateUrl={`${process.env.REACT_APP_API_URL}/users/${user._id}`}
                                 status={"blocked"}
                                 className={
                                   "btn btn--warning btn--gradi btn--shadow w-100  btn-lg"
@@ -445,7 +437,7 @@ const UserDetails = ({ globalState, setGlobalState }) => {
                                 "User won't be able to access his/her dashboard. Are you sure you want to remove user?"
                               }
                               action={"remove"}
-                              updateUrl={`${API_URL}/users/${user._id}`}
+                              updateUrl={`${process.env.REACT_APP_API_URL}/users/${user._id}`}
                               className={
                                 "btn btn--primary btn--shadow w-100 btn-lg"
                               }
@@ -469,4 +461,4 @@ const UserDetails = ({ globalState, setGlobalState }) => {
   );
 };
 
-export default withGlobalState(UserDetails);
+export default UserDetails;

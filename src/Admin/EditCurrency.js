@@ -4,59 +4,53 @@ import "./Admin.css";
 import axios from "axios";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import CheckBox from "../components/CheckBox";
 import TextInput from "../components/TextInput";
-import { withGlobalState } from "../withGlobalState";
 import openNotification from "../components/OpenNotification";
-import { Checkbox, Col, Row } from "antd";
 import Loader from "../components/Loader";
 
-const EditCurrency = ({ globalState, setGlobalState }) => {
+const EditCurrency = () => {
   const navigate = useNavigate();
   const { currencyId } = useParams();
   const [currency, setCurrency] = useState({});
-  const [checked, setChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [formData, setFormData] = useState({
-    currencyName: "",
-    currencyLogo: "",
-    currencyCode: "",
-    paymentGateway: "",
-    buyAt: "",
-    sellAt: "",
-    sendAt: "",
-    receiveAt: "",
-    exchangeRate: "",
-    reserveAmount: "",
-    availableForSell: false,
-    availableForBuy: false,
-    rateShow: false,
-    availableForSend: false,
-    availableForReceive: false,
-    minimumBuyAmount: "",
-    maximumBuyAmount: "",
-    buyFixedCharge: "",
-    buyPercentCharge: "",
-    minimumSellAmount: "",
-    maximumSellAmount: "",
-    sellFixedCharge: "",
-    sellPercentCharge: "",
-    minimumSendAmount: "",
-    maximumSendAmount: "",
-    sendFixedCharge: "",
-    sendPercentCharge: "",
-    minimumReceiveAmount: "",
-    maximumReceiveAmount: "",
-    receiveFixedCharge: "",
-    receivePercentCharge: "",
-    instructions: "",
-  });
+  // const [formData, setFormData] = useState({
+  //   currencyName: "",
+  //   currencyLogo: "",
+  //   currencyCode: "",
+  //   paymentGateway: "",
+  //   buyAt: "",
+  //   sellAt: "",
+  //   sendAt: "",
+  //   receiveAt: "",
+  //   exchangeRate: "",
+  //   reserveAmount: "",
+  //   availableForSell: false,
+  //   availableForBuy: false,
+  //   rateShow: false,
+  //   availableForSend: false,
+  //   availableForReceive: false,
+  //   minimumBuyAmount: "",
+  //   maximumBuyAmount: "",
+  //   buyFixedCharge: "",
+  //   buyPercentCharge: "",
+  //   minimumSellAmount: "",
+  //   maximumSellAmount: "",
+  //   sellFixedCharge: "",
+  //   sellPercentCharge: "",
+  //   minimumSendAmount: "",
+  //   maximumSendAmount: "",
+  //   sendFixedCharge: "",
+  //   sendPercentCharge: "",
+  //   minimumReceiveAmount: "",
+  //   maximumReceiveAmount: "",
+  //   receiveFixedCharge: "",
+  //   receivePercentCharge: "",
+  //   instructions: "",
+  // });
 
   useEffect(() => {
     document.title = "Edit Currency | BarterFunds";
-
-    const API_URL = globalState.api_url;
     const token = window.sessionStorage.getItem("token");
     
     if (!token) {
@@ -70,7 +64,7 @@ const EditCurrency = ({ globalState, setGlobalState }) => {
     };
 
     axios
-      .get(`${API_URL}/currencies/${currencyId}`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/currencies/${currencyId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           setCurrency(response.data.currency);
@@ -89,15 +83,15 @@ const EditCurrency = ({ globalState, setGlobalState }) => {
         console.log(error);
         console.log("No successful");
       });
-  }, []);
+  }, [navigate, currencyId]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
+    const { name, value, type, files } = e.target;
 
     // Check if the event target is a checkbox or select element
     const newValue =
       type === "checkbox"
-        ? setChecked(e.target.checked)
+        ? ''
         : type === "file"
         ? files[0]
         : value;
@@ -112,11 +106,7 @@ const EditCurrency = ({ globalState, setGlobalState }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle form submission here
-    setIsLoading(true)
-
-    const API_URL = globalState.api_url;
     const token = window.sessionStorage.getItem("token");
-    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE0MDU1OTg0LCJleHAiOjE3MTY2NDc5ODR9.bWMdV8VRZoQV2DNIsFHFIUFZbQCLoNyfrMkmq-m9rPg";
 
     const body = new FormData();
     for (const key in currency) {
@@ -132,7 +122,7 @@ const EditCurrency = ({ globalState, setGlobalState }) => {
     // console.log(body)
 
     axios
-      .patch(`${API_URL}/currencies/${currencyId}`, body, { headers: headers })
+      .patch(`${process.env.REACT_APP_API_URL}/currencies/${currencyId}`, body, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           // setMessage('Login Successfully')
@@ -164,6 +154,12 @@ const EditCurrency = ({ globalState, setGlobalState }) => {
       });
   };
 
+
+  const handleBack = () => {
+    navigate(-1);  // Go back to the previous page
+  };
+
+
   return (
     <div className="page-wrapper default-version">
       <AdminSidebar active={"currency"} />
@@ -177,12 +173,12 @@ const EditCurrency = ({ globalState, setGlobalState }) => {
               <div className="d-flex mb-30 flex-wrap gap-3 justify-content-between align-items-center">
                 <h6 className="page-title">Edit Currency</h6>
                 <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-                  <a
-                    href="javascript: history.go(-1)"
+                  <button
+                    onClick={handleBack}
                     className="btn btn-sm btn-outline--primary"
                   >
                     <i className="la la-undo" /> Back
-                  </a>
+                  </button>
                 </div>
               </div>
               <form encType="multipart/form-data">
@@ -807,4 +803,4 @@ const EditCurrency = ({ globalState, setGlobalState }) => {
   );
 };
 
-export default withGlobalState(EditCurrency);
+export default EditCurrency;

@@ -1,24 +1,23 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import './Admin.css'
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from '../withGlobalState';
 
 
-const AdminDashboard = ({ globalState, setGlobalState }) => {
+const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Admin Dashboard | BarterFunds';
     const token = window.sessionStorage.getItem("token");
 
-    // if (!token) {
-    //   navigate('/login');
-    //   return;
-    // }
+    if (!token) {
+      navigate('/login');
+      return;
+    }
 
-  }, [])
+  }, [navigate])
 
     return (
       <div className="page-wrapper default-version">
@@ -33,7 +32,7 @@ const AdminDashboard = ({ globalState, setGlobalState }) => {
     <div className="row gy-4">
       <div className="col-xxl-3 col-sm-6">
         <div className="card bg--primary overflow-hidden box--shadow2">
-          <a href="users/users.html" className="item-link" />
+          {/* <a href="#" className="item-link" /> */}
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-4">
@@ -50,7 +49,7 @@ const AdminDashboard = ({ globalState, setGlobalState }) => {
       {/* dashboard-w1 end */}
       <div className="col-xxl-3 col-sm-6">
         <div className="card bg--success overflow-hidden box--shadow2">
-          <a href="users/active.html" className="item-link" />
+          {/* <a href="users/active.html" className="item-link" /> */}
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-4">
@@ -67,7 +66,7 @@ const AdminDashboard = ({ globalState, setGlobalState }) => {
       {/* dashboard-w1 end */}
       <div className="col-xxl-3 col-sm-6">
         <div className="card bg--danger overflow-hidden box--shadow2">
-          <a href="users/email-unverified.html" className="item-link" />
+          {/* <a href="users/email-unverified.html" className="item-link" /> */}
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-4">
@@ -86,7 +85,7 @@ const AdminDashboard = ({ globalState, setGlobalState }) => {
       {/* dashboard-w1 end */}
       <div className="col-xxl-3 col-sm-6">
         <div className="card bg--red overflow-hidden box--shadow2">
-          <a href="users/mobile-unverified.html" className="item-link" />
+          {/* <a href="users/mobile-unverified.html" className="item-link" /> */}
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-4">
@@ -376,4 +375,4 @@ const AdminDashboard = ({ globalState, setGlobalState }) => {
 }
 
 
-export default withGlobalState(AdminDashboard);
+export default AdminDashboard;

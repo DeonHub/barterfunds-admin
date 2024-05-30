@@ -3,18 +3,18 @@ import './Admin.css'
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
 import { useNavigate, useLocation } from "react-router-dom";
-import { withGlobalState } from "../withGlobalState";
 import Loader from "../components/Loader";
 import axios from "axios";
 
 
-const Transactions = ({}) => {
+const Transactions = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [transactions, setTransactions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
   const searchParams = new URLSearchParams(location.search);
@@ -53,7 +53,7 @@ const Transactions = ({}) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [location.search]);
+  }, [location.search, navigate, userId]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -120,20 +120,6 @@ const Transactions = ({}) => {
     });
   }
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'pending':
-        return 'info'; 
-      case 'success':
-        return 'success'; 
-      case 'cancelled':
-        return 'warning'; 
-      case 'failed':
-        return 'danger'; 
-      default:
-        return '';
-    }
-  };
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -169,6 +155,8 @@ const Transactions = ({}) => {
                     </div>
                 </div>
               </div>
+
+              <input type="hidden" value={count} />
       
           <div className="row mt-3">
             <div className="col-lg-12">
@@ -199,7 +187,7 @@ const Transactions = ({}) => {
                           <td>
                           <div className="user">
                                       <div className="thumb">
-                                        <img src='/assets/images/currency/btc.png' />
+                                        <img src='/assets/images/currency/btc.png' alt="user" />
                                       </div>
                                       <span className="name fw-bold">
                                         {transaction.currency ? transaction.currency.currencyName : 'Bitcoin (BTC)' }<br/>

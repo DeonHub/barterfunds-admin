@@ -1,13 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Auth/Login';
-import Signup from './Auth/Signup';
 import ForgotPassword from './Auth/ForgotPassword';
 // import Success from './Auth/Success';
 
 import ResetPassword from './Auth/ResetPassword';
-import TwoFactor from './Auth/TwoFactor';
-import AccountActivation from './Auth/AccountActivation';
 import AdminDashboard from './Admin/AdminDashboard';
 
 
@@ -57,10 +54,7 @@ const App = () => {
         {/* Auth routes go here */}
         <Route path={'/'} element={<Login navigate={navigateTo} />}/>
         <Route path={'/login'} element={<Login navigate={navigateTo} />}/>
-        <Route path={'/signup'} element={<Signup navigate={navigateTo} />} />
         <Route path={'/forgot-password'} element={<ForgotPassword navigate={navigateTo} />} />
-        <Route path={'/login/mfa'} element={<TwoFactor navigate={navigateTo} />} />
-        <Route path={'/account-activation/:activationToken'} element={<AccountActivation />} />
         <Route path={'/reset-password/:resetToken'} element={<ResetPassword />} />
 
         {/* Admin routes go here */}

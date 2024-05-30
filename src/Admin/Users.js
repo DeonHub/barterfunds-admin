@@ -3,19 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
 
-import { users } from "./components/data";
-import { Button, Table } from "antd";
 import axios from "axios";
 import Loader from "../components/Loader";
 
-const Users = ({ globalState, setGlobalState }) => {
+const Users = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const API_URL = globalState.api_url;
 
   useEffect(() => {
     document.title = "Users | BarterFunds";
@@ -31,7 +26,7 @@ const Users = ({ globalState, setGlobalState }) => {
     };
 
     axios
-      .get(`${API_URL}/users`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/users`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           setUsers(response.data.users);
@@ -53,13 +48,13 @@ const Users = ({ globalState, setGlobalState }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
-  const currentYear = new Date().getFullYear();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -272,4 +267,4 @@ const Users = ({ globalState, setGlobalState }) => {
   );
 };
 
-export default withGlobalState(Users);
+export default Users;

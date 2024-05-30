@@ -2,20 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import OpenModal from "../components/OpenModal";
-// import { currencies } from "./components/data";
-import { withGlobalState } from "../withGlobalState";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 
 
-const Currencies = ({ globalState, setGlobalState }) => {
+const Currencies = () => {
   const navigate = useNavigate();
   const [currencies, setCurrencies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const API_URL = globalState.api_url;
 
   useEffect(() => {
     document.title = "Currencies | BarterFunds";
@@ -32,7 +27,7 @@ const Currencies = ({ globalState, setGlobalState }) => {
     };
 
     axios
-      .get(`${API_URL}/currencies`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/currencies`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           setCurrencies(response.data.currencies);
@@ -44,11 +39,12 @@ const Currencies = ({ globalState, setGlobalState }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -145,7 +141,7 @@ const Currencies = ({ globalState, setGlobalState }) => {
                                   <td>
                                     <div className="user">
                                       <div className="thumb">
-                                        <img src={currency.currencyLogo} />
+                                        <img src={currency.currencyLogo} alt="logo" />
                                       </div>
                                       <span className="name">
                                         {currency.currencyName}
@@ -279,4 +275,4 @@ const Currencies = ({ globalState, setGlobalState }) => {
   );
 };
 
-export default withGlobalState(Currencies);
+export default Currencies;

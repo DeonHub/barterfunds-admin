@@ -3,10 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
-import { Image, Avatar } from "antd";
+import { Image } from "antd";
 import axios from "axios";
-import { UserOutlined } from "@ant-design/icons";
 import PageModal from "../components/PageModal";
 // import OpenModal from "../components/OpenModal";
 import Loader from "../components/Loader";
@@ -15,7 +13,6 @@ const OrderDetails = () => {
   const navigate = useNavigate();
   const { orderId } = useParams();
   const [order, setOrder] = useState({});
-  const API_URL = process.env.REACT_APP_API_URL;
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -33,7 +30,7 @@ const OrderDetails = () => {
     };
 
     axios
-      .get(`${API_URL}/orders/${orderId}`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/orders/${orderId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           // console.log(response.data.user)
@@ -49,7 +46,7 @@ const OrderDetails = () => {
         console.log(error);
         console.log("No successful");
       });
-  }, []);
+  }, [navigate, orderId]);
 
   const formatDate = (dateTimeString) => {
     const date = new Date(dateTimeString);
@@ -82,10 +79,6 @@ const OrderDetails = () => {
     });
   }
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
   const formatPaymentMethod = (string) => {
     if (string === 'momo'){
       return 'Mobile Money';
@@ -99,6 +92,10 @@ const OrderDetails = () => {
       return 'User Wallet'
     }
   }
+
+  const handleBack = () => {
+    navigate(-1);  // Go back to the previous page
+  };
 
   return (
     <div className="page-wrapper default-version">
@@ -114,19 +111,19 @@ const OrderDetails = () => {
 </h6>
 
             <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-              <a
-                href="javascript: history.go(-1)"
+              <button
+                onClick={handleBack}
                 className="btn btn-sm btn-outline--primary"
               >
                 <i className="la la-undo" /> Back
-              </a>
-              <a
-                href="../../admin/exchange/exchange/download/1717"
+              </button>
+              <button
+                onClick={handleBack}
                 className="btn btn-sm btn-primary"
               >
                 <i className="la la-download" />
                 Download
-              </a>
+              </button>
             </div>
           </div>
           <div className="row gy-4 justify-content-center">
@@ -265,7 +262,7 @@ const OrderDetails = () => {
                   }
                   action={order.action}
                   status={"success"}
-                  updateUrl={`${API_URL}/orders/${order._id}`}
+                  updateUrl={`${process.env.REACT_APP_API_URL}/orders/${order._id}`}
                   className={
                     "btn btn--success btn-approved flex-grow-1"
                   }
@@ -282,7 +279,7 @@ const OrderDetails = () => {
                   }
                   action={order.action}
                   status={"cancelled"}
-                  updateUrl={`${API_URL}/orders/${order._id}`}
+                  updateUrl={`${process.env.REACT_APP_API_URL}/orders/${order._id}`}
                   className={
                     "btn--danger btn btn-cancel flex-grow-1"
                   }

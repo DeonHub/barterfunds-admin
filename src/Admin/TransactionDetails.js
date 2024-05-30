@@ -3,19 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
-import { Image, Avatar } from "antd";
+import { Image } from "antd";
 import axios from "axios";
-import { UserOutlined } from "@ant-design/icons";
 import PageModal from "../components/PageModal";
-// import OpenModal from "../components/OpenModal";
 import Loader from "../components/Loader";
 
 const TransactionDetails = () => {
   const navigate = useNavigate();
   const { transactionId } = useParams();
   const [transaction, setTransaction] = useState({});
-  const API_URL = process.env.REACT_APP_API_URL;
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -33,7 +29,7 @@ const TransactionDetails = () => {
     };
 
     axios
-      .get(`${API_URL}/transactions/${transactionId}`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/transactions/${transactionId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           // console.log(response.data.user)
@@ -53,7 +49,7 @@ const TransactionDetails = () => {
         console.log(error);
         console.log("No successful");
       });
-  }, []);
+  }, [navigate, transactionId]);
 
   const formatDate = (dateTimeString) => {
     const date = new Date(dateTimeString);
@@ -104,6 +100,10 @@ const TransactionDetails = () => {
     }
   }
 
+  const handleBack = () => {
+    navigate(-1);  // Go back to the previous page
+  };
+
   return (
     <div className="page-wrapper default-version">
       <AdminSidebar active={'transaction'}/>
@@ -115,19 +115,19 @@ const TransactionDetails = () => {
           <div className="d-flex mb-30 flex-wrap gap-3 justify-content-between align-items-center">
             <h6 className="page-title">Transaction #{transaction.transactionId}</h6>
             <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-              <a
-                href="javascript: history.go(-1)"
+              <button
+                onClick={handleBack}
                 className="btn btn-sm btn-outline--primary"
               >
                 <i className="la la-undo" /> Back
-              </a>
-              <a
-                href="../../admin/exchange/exchange/download/1717"
+              </button>
+              <button
+                onClick={handleBack}
                 className="btn btn-sm btn-primary"
               >
                 <i className="la la-download" />
                 Download
-              </a>
+              </button>
             </div>
           </div>
           <div className="row gy-4 justify-content-center">
@@ -272,7 +272,7 @@ const TransactionDetails = () => {
                   }
                   action={"Transaction's payment confirmed."}
                   status={"pending"}
-                  updateUrl={`${API_URL}/transactions/${transaction._id}`}
+                  updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
                   className={
                     "btn btn--warning btn-refund flex-grow-1"
                   }
@@ -289,7 +289,7 @@ const TransactionDetails = () => {
                   }
                   action={"Transaction succefully approved."}
                   status={"success"}
-                  updateUrl={`${API_URL}/transactions/${transaction._id}`}
+                  updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
                   className={
                     "btn btn--success btn-approved flex-grow-1"
                   }
@@ -306,7 +306,7 @@ const TransactionDetails = () => {
                   }
                   action={"Transaction has been cancelled."}
                   status={"cancelled"}
-                  updateUrl={`${API_URL}/transactions/${transaction._id}`}
+                  updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
                   className={
                     "btn--danger btn btn-cancel flex-grow-1"
                   }

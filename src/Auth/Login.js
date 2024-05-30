@@ -3,7 +3,6 @@ import "./Auth.css";
 import TextInput from "../components/TextInput";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
-import { withGlobalState } from "../withGlobalState";
 import FailedLogin from "./FailedLogin";
 
 class Login extends React.Component {
@@ -170,7 +169,6 @@ class Login extends React.Component {
   }
 
   render() {
-    const { globalState } = this.props;
 
     return (
       <div class="nk-app-root">
@@ -265,4 +263,4 @@ class Login extends React.Component {
   }
 }
 
-export default withGlobalState(Login);
+export default Login;

@@ -3,19 +3,19 @@ import './Admin.css'
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
 import { useNavigate, useLocation } from "react-router-dom";
-import { withGlobalState } from "../withGlobalState";
 import Loader from "../components/Loader";
 import axios from "axios";
 
 
-const Orders = ({}) => {
+const Orders = () => {
 
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
   const searchParams = new URLSearchParams(location.search);
@@ -54,7 +54,7 @@ const Orders = ({}) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [location.search]);
+  }, [location.search, navigate, userId]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -121,21 +121,6 @@ const Orders = ({}) => {
     });
   }
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'pending':
-        return 'info'; 
-      case 'success':
-        return 'success'; 
-      case 'cancelled':
-        return 'warning'; 
-      case 'failed':
-        return 'danger'; 
-      default:
-        return '';
-    }
-  };
-
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -152,7 +137,7 @@ const Orders = ({}) => {
 
           <div className="d-flex justify-content-between align-items-center">
                   <h6 className="page-title">Orders Log</h6>
-                  
+                  <input type="hidden" value={count} />
                   <div className="d-flex flex-wrap justify-content-end align-items-center breadcrumb-plugins">
                   <div className="input-group w-auto flex-fill">
                         <input
@@ -174,7 +159,7 @@ const Orders = ({}) => {
             <div className="row justify-content-center mt-3">
               <div className="col-xl-4 col-sm-6 mb-30">
                 <div className="widget-two box--shadow2 has-link b-radius--5 bg--success">
-                  <a href="../../admin/withdraw/approved" className="item-link" />
+                  {/* <a href="../../admin/withdraw/approved" className="item-link" /> */}
                   <div className="widget-two__content">
                     <h2 className="text-white">₵0.00</h2>
                     <p className="text-white">Approved Withdrawals</p>
@@ -184,7 +169,7 @@ const Orders = ({}) => {
               </div>
               <div className="col-xl-4 col-sm-6 mb-30">
                 <div className="widget-two box--shadow2 has-link b-radius--5 bg--6">
-                  <a href="../../admin/withdraw/pending" className="item-link" />
+                  {/* <a href="../../admin/withdraw/pending" className="item-link" /> */}
                   <div className="widget-two__content">
                     <h2 className="text-white">₵25,998.00</h2>
                     <p className="text-white">Pending Withdrawals</p>
@@ -194,7 +179,7 @@ const Orders = ({}) => {
               </div>
               <div className="col-xl-4 col-sm-6 mb-30">
                 <div className="widget-two box--shadow2 b-radius--5 has-link bg--pink">
-                  <a href="../../admin/withdraw/rejected" className="item-link" />
+                  {/* <a href="../../admin/withdraw/rejected" className="item-link" /> */}
                   <div className="widget-two__content">
                     <h2 className="text-white">₵0.00</h2>
                     <p className="text-white">Rejected Withdrawals</p>
@@ -304,8 +289,59 @@ const Orders = ({}) => {
                       </table>
                     </div>
                   </div>
+
+                  {currentPageData.length === 0 ? (
+                    <p></p>
+                  ) : (
+                    <div className="card-footer py-4">
+                      <nav>
+                        <ul className="pagination">
+                          <li
+                            className="page-item"
+                            onClick={() => goToPage(currentPage - 1)}
+                            disabled={currentPage === 1}
+                          >
+                            <button
+                              className="page-link"
+                              disabled={currentPage === 1}
+                            >
+                              «
+                            </button>
+                          </li>
+                          {[...Array(totalPages)].map((_, index) => (
+                            <li
+                              key={index}
+                              className={`page-item ${
+                                index + 1 === currentPage ? "active" : ""
+                              }`}
+                            >
+                              <button
+                                className="page-link"
+                                onClick={() => goToPage(index + 1)}
+                              >
+                                {index + 1}
+                              </button>
+                            </li>
+                          ))}
+                          <li
+                            className="page-item"
+                            onClick={() => goToPage(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                          >
+                            <button
+                              className="page-link"
+                              disabled={currentPage === totalPages}
+                            >
+                              »
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  )}
+
                 </div>
-                {/* card end */}
+                
               </div>
             </div>
           </div>

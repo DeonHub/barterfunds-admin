@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Result } from 'antd';
+import { Result } from 'antd';
 
 const NotFound = () => (
   <div className="mt-5">

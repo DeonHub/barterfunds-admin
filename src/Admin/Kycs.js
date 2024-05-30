@@ -3,22 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
 import Loader from "../components/Loader";
 import axios from "axios";
 
 
-const Kycs = ({ globalState, setGlobalState }) => {
+const Kycs = () => {
   const navigate = useNavigate();
-  const currentYear = new Date().getFullYear();
   const [isLoading, setIsLoading] = useState(true);
   const [kycs, setKycs] = useState([]);
 
-  const API_URL = globalState.api_url;
-
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
+
 
   useEffect(() => {
     document.title = "View KYCs | BarterFunds";
@@ -35,7 +33,7 @@ const Kycs = ({ globalState, setGlobalState }) => {
     };
 
     axios
-      .get(`${API_URL}/kycs`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/kycs`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           setKycs(response.data.kycs);
@@ -56,7 +54,7 @@ const Kycs = ({ globalState, setGlobalState }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -285,4 +283,4 @@ const Kycs = ({ globalState, setGlobalState }) => {
   );
 };
 
-export default withGlobalState(Kycs);
+export default Kycs;

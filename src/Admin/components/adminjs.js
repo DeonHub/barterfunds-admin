@@ -1,4 +1,3 @@
-'use strict';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize slimScroll for sidebar menu wrapper

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import axios from "axios";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
 
 import TextInput from "../components/TextInput";
-import { withGlobalState } from "../withGlobalState";
 import openNotification from "../components/OpenNotification";
 import Loader from "../components/Loader";
 
@@ -69,7 +68,7 @@ const CreateCurrency = ({ globalState }) => {
       setSubmitButton(false);
     }
     setIsLoading(false)
-  }, [formData]);
+  }, [navigate, formData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -87,26 +86,21 @@ const CreateCurrency = ({ globalState }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can handle form submission here
     setIsLoading(true)
 
-    const API_URL = globalState.api_url;
     const token = window.sessionStorage.getItem("token");
-    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE0MDU1OTg0LCJleHAiOjE3MTY2NDc5ODR9.bWMdV8VRZoQV2DNIsFHFIUFZbQCLoNyfrMkmq-m9rPg";
 
     const body = new FormData();
     for (const key in formData) {
       body.append(key, formData[key]);
     }
-    // Example: Send formDataToSend to server using fetch or axios
-    // console.log(body);
 
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
     axios
-      .post(`${API_URL}/currencies`, body, { headers: headers })
+      .post(`${process.env.REACT_APP_API_URL}/currencies`, body, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           // setMessage('Login Successfully')
@@ -138,6 +132,11 @@ const CreateCurrency = ({ globalState }) => {
       });
   };
 
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="page-wrapper default-version">
       <AdminSidebar active={"currency"} />
@@ -151,12 +150,12 @@ const CreateCurrency = ({ globalState }) => {
               <div className="d-flex mb-30 flex-wrap gap-3 justify-content-between align-items-center">
                 <h6 className="page-title">Create Currency</h6>
                 <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-                  <a
-                    href="javascript: history.go(-1)"
+                  <button
+                    onClick={handleBack}
                     className="btn btn-sm btn-outline--primary"
                   >
                     <i className="la la-undo" /> Back
-                  </a>
+                  </button>
                 </div>
               </div>
               <form encType="multipart/form-data">
@@ -757,4 +756,4 @@ const CreateCurrency = ({ globalState }) => {
   );
 };
 
-export default withGlobalState(CreateCurrency);
+export default CreateCurrency;

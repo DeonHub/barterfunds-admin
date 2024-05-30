@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './Admin.css'
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
@@ -27,7 +27,7 @@ const AdminResetPassword = () => {
 
     setIsLoading(false);
    
-  }, []);
+  }, [navigate]);
 
 
   const handleInputChange = (event) => {
@@ -84,6 +84,11 @@ const AdminResetPassword = () => {
 
   const passwordsMatch = password === confirmPassword && password.length >= 8;
 
+
+  const handleBack = () => {
+    navigate(-1);  // Go back to the previous page
+  };
+
   return (
     <div className="page-wrapper default-version">
       <AdminSidebar active={'dashboard'}/>
@@ -95,12 +100,12 @@ const AdminResetPassword = () => {
           <div className="d-flex mb-30 flex-wrap gap-3 justify-content-between align-items-center">
             <h6 className="page-title">Reset Password</h6>
             <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-              <a
-                href="javascript: history.go(-1)"
+              <button
+                onClick={handleBack}
                 className="btn btn-sm btn-outline--primary"
               >
                 <i className="la la-undo" /> Back
-              </a>
+              </button>
             </div>
           </div>
           <form

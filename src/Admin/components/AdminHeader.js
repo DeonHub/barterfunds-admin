@@ -1,5 +1,5 @@
-import React, {useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import './adminjs';
 
 const AdminHeader = () => {
@@ -62,7 +62,7 @@ const AdminHeader = () => {
                   <div className="navbar-notifi__left bg--green b-radius--rounded">
                     <img
                       src="../../placeholder-image/350x300"
-                      alt="Profile Image"
+                      alt="Profile"
                     />
                   </div>
                   <div className="navbar-notifi__right">
@@ -73,198 +73,7 @@ const AdminHeader = () => {
                     </span>
                   </div>
                 </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/460.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">New member registered</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />
-                      14 hours ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/459.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">New member registered</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />
-                      20 hours ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-              
-              <a
-                href="notification/read/457.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">send 0 by Bkash</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />2 days ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/456.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">New member registered</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />2 days ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/455.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">New member registered</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />2 days ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/454.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">send 0 by Bkash</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />3 days ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/452.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">New member registered</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />3 days ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/450.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">send 0 by Payoneer</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />4 days ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
-              </a>
-
-              <a
-                href="notification/read/449.html"
-                className="dropdown-menu__item"
-              >
-                <div className="navbar-notifi">
-                  <div className="navbar-notifi__left bg--green b-radius--rounded">
-                    <img
-                      src="../../placeholder-image/350x300"
-                      alt="Profile Image"
-                    />
-                  </div>
-                  <div className="navbar-notifi__right">
-                    <h6 className="notifi__title">send 0 by Payoneer</h6>
-                    <span className="time">
-                      <i className="far fa-clock" />4 days ago
-                    </span>
-                  </div>
-                </div>
-                {/* navbar-notifi end */}
+                
               </a>
 
 
@@ -287,7 +96,7 @@ const AdminHeader = () => {
           >
             <span className="navbar-user">
               <span className="navbar-user__thumb">
-                <img src="/assets/images/default.png" alt="image" />
+                <img src="/assets/images/default.png" alt="default" />
               </span>
               <span className="navbar-user__info">
                 <span className="navbar-user__name">admin</span>
@@ -312,14 +121,13 @@ const AdminHeader = () => {
               <i className="dropdown-menu__icon las la-key" />
               <span className="dropdown-menu__caption">Password Reset</span>
             </a>
-            <a
-              href="javascript:void(0);"
+            <span
               className="dropdown-menu__item d-flex align-items-center px-3 py-2"
               onClick={handleLogout}
             >
               <i className="dropdown-menu__icon las la-sign-out-alt" />
               <span className="dropdown-menu__caption">Logout</span>
-            </a>
+            </span>
           </div>
         </li>
       </ul>

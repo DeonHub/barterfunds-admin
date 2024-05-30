@@ -1,12 +1,10 @@
 import React from "react";
-import { Button, Result, Statistic } from "antd";
+import {  Result } from "antd";
 
-const { Countdown } = Statistic;
 
-const FailedLogin = ({ deadline }) => {
-  const onFinish = () => {
-    console.log("You can login now");
-  };
+
+const FailedLogin = () => {
+
 
   return (
     <div className="mt-5">

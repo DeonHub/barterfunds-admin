@@ -3,18 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
+
 import { Image, Avatar } from "antd";
 import Loader from "../components/Loader";
 import axios from "axios";
-import { UserOutlined } from "@ant-design/icons";
 import PageModal from "../components/PageModal";
 
-const KycDetails = ({ globalState, setGlobalState }) => {
+const KycDetails = () => {
   const navigate = useNavigate();
   const { kycId } = useParams();
   const [kyc, setKyc] = useState({});
-  const API_URL = globalState.api_url;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -32,7 +30,7 @@ const KycDetails = ({ globalState, setGlobalState }) => {
     };
 
     axios
-      .get(`${API_URL}/kycs/${kycId}`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/kycs/${kycId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           setKyc(response.data.kyc);
@@ -51,12 +49,16 @@ const KycDetails = ({ globalState, setGlobalState }) => {
         console.log(error);
         console.log("No successful");
       });
-  }, []);
+  }, [navigate, kycId]);
 
   const formatDate = (dateTimeString) => {
     const date = new Date(dateTimeString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("en-US", options);
+  };
+
+  const handleBack = () => {
+    navigate(-1);  // Go back to the previous page
   };
 
   return (
@@ -74,12 +76,12 @@ const KycDetails = ({ globalState, setGlobalState }) => {
                   KYC Details - {kyc.firstname} {kyc.surname}
                 </h6>
                 <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-                  <a
-                    href="javascript: history.go(-1)"
+                  <button
+                    onClick={handleBack}
                     className="btn btn-sm btn-outline--primary"
                   >
                     <i className="la la-undo" /> Back
-                  </a>
+                  </button>
                 </div>
               </div>
               <div className="row">
@@ -382,7 +384,7 @@ const KycDetails = ({ globalState, setGlobalState }) => {
                                     }
                                     action={"approve"}
                                     status={"approved"}
-                                    updateUrl={`${API_URL}/kycs/${kyc._id}`}
+                                    updateUrl={`${process.env.REACT_APP_API_URL}/kycs/${kyc._id}`}
                                     className={
                                       "btn btn--success btn--shadow w-100 btn-lg center"
                                     }
@@ -400,7 +402,7 @@ const KycDetails = ({ globalState, setGlobalState }) => {
                                     }
                                     action={"reject"}
                                     status={"rejected"}
-                                    updateUrl={`${API_URL}/kycs/${kyc._id}`}
+                                    updateUrl={`${process.env.REACT_APP_API_URL}/kycs/${kyc._id}`}
                                     className={
                                       "btn btn--warning btn--shadow w-100 btn-lg center"
                                     }
@@ -417,7 +419,7 @@ const KycDetails = ({ globalState, setGlobalState }) => {
                                         "This users KYC will be deleted. Are you sure you want to delete this KYC?"
                                       }
                                       action={"delete"}
-                                      updateUrl={`${API_URL}/kycs/${kyc._id}`}
+                                      updateUrl={`${process.env.REACT_APP_API_URL}/kycs/${kyc._id}`}
                                       className={
                                         "btn btn--primary btn--shadow w-100 btn-lg center"
                                       }
@@ -457,4 +459,4 @@ const KycDetails = ({ globalState, setGlobalState }) => {
   );
 };
 
-export default withGlobalState(KycDetails);
+export default KycDetails;

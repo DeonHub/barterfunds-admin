@@ -3,20 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
-import { Image, Avatar } from "antd";
 import axios from "axios";
-import { UserOutlined } from "@ant-design/icons";
-import PageModal from "../components/PageModal";
 import OpenModal from "../components/OpenModal";
-// import OpenModal from "../components/OpenModal";
 import Loader from "../components/Loader";
 
 const CurrencyDetails = () => {
   const navigate = useNavigate();
   const { currencyId } = useParams();
   const [currency, setCurrency] = useState({});
-  const API_URL = process.env.REACT_APP_API_URL;
+  // const API_URL = process.env.REACT_APP_API_URL;
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -34,7 +29,7 @@ const CurrencyDetails = () => {
     };
 
     axios
-      .get(`${API_URL}/currencies/${currencyId}`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/currencies/${currencyId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           // console.log(response.data.user)
@@ -54,7 +49,7 @@ const CurrencyDetails = () => {
         console.log(error);
         console.log("No successful");
       });
-  }, []);
+  }, [navigate, currencyId]);
 
   const formatDate = (dateTimeString) => {
     const date = new Date(dateTimeString);
@@ -87,21 +82,10 @@ const CurrencyDetails = () => {
     });
   }
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+  const handleBack = () => {
+    navigate(-1);  // Go back to the previous page
+  };
 
-  const formatPaymentMethod = (string) => {
-    if (string === 'momo'){
-      return 'Mobile Money';
-    } else if (string === 'bank'){
-      return 'Bank Transfer';
-    } else if (string === 'credit-card'){
-      return 'Credit Card';
-    } else if (string === 'wallet'){
-      return 'Barter Wallet';
-    }
-  }
 
   return (
     <div className="page-wrapper default-version">
@@ -114,12 +98,12 @@ const CurrencyDetails = () => {
           <div className="d-flex mb-30 flex-wrap gap-3 justify-content-between align-items-center">
             <h6 className="page-title">Currency #1234567890</h6>
             <div className="d-flex flex-wrap justify-content-end gap-2 align-items-center breadcrumb-plugins">
-              <a
-                href="javascript: history.go(-1)"
+              <button
+                onClick={handleBack}
                 className="btn btn-sm btn-outline--primary"
               >
                 <i className="la la-undo" /> Back
-              </a>
+              </button>
               
             </div>
           </div>
@@ -139,7 +123,7 @@ const CurrencyDetails = () => {
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Currency Logo</span>
                       <span className="d-block fw-bold">
-                        <img style={{ width: '30%', float: 'right'}} src={currency.currencyLogo} />
+                        <img style={{ width: '30%', float: 'right'}} src={currency.currencyLogo} alt="logo" />
                         </span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
@@ -348,7 +332,7 @@ const CurrencyDetails = () => {
                                       <OpenModal
                                         title={`Disable ${currency.currencyName}`}
                                         content={`Are you sure you want to disable ${currency.currencyName}`}
-                                        updateUrl={`${API_URL}/currencies/${currency._id}`}
+                                        updateUrl={`${process.env.REACT_APP_API_URL}/currencies/${currency._id}`}
                                         status={"inactive"}
                                         action={"Disable Currency"}
                                         setIsLoading={setIsLoading}
@@ -358,7 +342,7 @@ const CurrencyDetails = () => {
                                       <OpenModal
                                         title={`Activate ${currency.currencyName}`}
                                         content={`Are you sure you want to activate ${currency.currencyName}`}
-                                        updateUrl={`${API_URL}/currencies/${currency._id}`}
+                                        updateUrl={`${process.env.REACT_APP_API_URL}/currencies/${currency._id}`}
                                         status={"active"}
                                         action={"Activate Currency"}
                                         setIsLoading={setIsLoading}

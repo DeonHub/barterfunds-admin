@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { withGlobalState } from "../withGlobalState";
-import { Button, Table } from "antd";
 import axios from "axios";
 import Loader from "../components/Loader";
 
-const Tickets = ({ globalState, setGlobalState }) => {
+const Tickets = () => {
   const navigate = useNavigate();
   const [tickets, setTickets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const API_URL = globalState.api_url;
 
   useEffect(() => {
     document.title = "Support Tickets | BarterFunds";
@@ -29,7 +25,7 @@ const Tickets = ({ globalState, setGlobalState }) => {
     };
 
     axios
-      .get(`${API_URL}/tickets`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/tickets`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           const sortedTickets = response.data.tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -43,13 +39,13 @@ const Tickets = ({ globalState, setGlobalState }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
-  const currentYear = new Date().getFullYear();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -271,4 +267,4 @@ const Tickets = ({ globalState, setGlobalState }) => {
   );
 };
 
-export default withGlobalState(Tickets);
+export default Tickets;
