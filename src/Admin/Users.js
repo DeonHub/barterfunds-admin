@@ -142,9 +142,9 @@ const Users = () => {
                         <thead>
                           <tr>
                             <th>User</th>
-                            <th>Email</th>
-                            <th>Contact</th>
+                            <th>Email/Contact</th>
                             <th>Joined At</th>
+                            <th>Last Login</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
@@ -163,18 +163,24 @@ const Users = () => {
                                   </span>
                                   <br />
                                   <span className="small">
-                                    <a href={`users/${user._id}`}>
+                                    <a href={`users/details/${user._id}`}>
                                       <span>@</span>
                                       {user.username}
                                     </a>
                                   </span>
                                 </td>
-                                <td>{user.email}</td>
+                                <td>{user.email}<br />
+                                {user.contact}
+                                </td>
 
-                                <td>{user.contact}</td>
+                               
                                 <td>
                                   {formatDate(user.createdAt)} <br />
                                   {formatTime(user.createdAt)}
+                                </td>
+                                <td>
+                                  {user.lastLogin ? formatDate(user.lastLogin) : 'Not Logged In'} <br />
+                                  {user.lastLogin ? formatTime(user.lastLogin) : 'Not Logged In'}
                                 </td>
                                 <td>
                                   {user.status === "active" ? (

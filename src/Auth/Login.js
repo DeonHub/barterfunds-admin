@@ -176,7 +176,7 @@ class Login extends React.Component {
                   <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
                     <div className="brand-logo pb-4 text-center">
                       <a
-                        href={`$/`}
+                        href={`/`}
                         className="logo-link"
                       >
                         <img
