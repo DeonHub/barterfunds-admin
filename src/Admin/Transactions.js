@@ -187,10 +187,10 @@ const Transactions = () => {
                           <td>
                           <div className="user">
                                       <div className="thumb">
-                                        <img src='/assets/images/currency/btc.png' alt="user" />
+                                        <img src={transaction.currencyId ? transaction.currencyId.currencyLogo : "/assets/images/currency/btc.png"} alt="user" />
                                       </div>
                                       <span className="name fw-bold">
-                                        {transaction.currency ? transaction.currency.currencyName : 'Bitcoin (BTC)' }<br/>
+                                      {transaction.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}<br/>
                                         <small className="text-muted fw-bold">
                               {/* {formatDate(transaction.createdAt)} {formatTime(transaction.createdAt)} */}
                               {transaction.transactionId}
