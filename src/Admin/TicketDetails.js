@@ -5,8 +5,9 @@ import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
 import axios from "axios";
 import Loader from "../components/Loader";
-import PageModal from "../components/PageModal";
-import { Image } from "antd";
+// import PageModal from "../components/PageModal";
+// import { Image } from "antd";
+import openNotification from "../components/OpenNotification";
 
 
 const TicketDetails = () => {
@@ -16,7 +17,11 @@ const TicketDetails = () => {
   const [ticket, setTicket] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [submitButton, setSubmitButton] = useState(false);
-  const [comments, setComments] = useState("");
+  // const [comments, setComments] = useState("");
+  const [fileInputs, setFileInputs] = useState([{ description: '', file: null }]);
+  const [message, setMessage] = useState('');
+
+  // const [submitButton, setSubmitButton] = useState(false);
 
   useEffect(() => {
     document.title = "Ticket Details | BarterFunds";
@@ -52,10 +57,10 @@ const TicketDetails = () => {
       });
   }, [navigate, ticketId, ticket]);
 
-  const handleChange = (e) => {
-    setComments(e.target.value);
-    setSubmitButton(e.target.value.trim().length > 0);
-  };
+  // const handleChange = (e) => {
+  //   setComments(e.target.value);
+  //   setSubmitButton(e.target.value.trim().length > 0);
+  // };
 
   const formatDate = (dateTimeString) => {
     const date = new Date(dateTimeString);
@@ -77,6 +82,135 @@ const TicketDetails = () => {
 
   const handleBack = () => {
     navigate(-1);  // Go back to the previous page
+  };
+
+  const getFileUrl = (filepath) => {
+    if (filepath?.startsWith('uploads')) {
+      return `${process.env.REACT_APP_API_URL}/${filepath}`;
+    }
+    return filepath;
+  };
+
+  const handleFileInputChange = (index, event) => {
+    const { name, value, files } = event.target;
+    const newFileInputs = [...fileInputs];
+    if (name === 'description') {
+      newFileInputs[index].description = value;
+    } else if (name === 'file') {
+      newFileInputs[index].file = files[0];
+    }
+    setFileInputs(newFileInputs);
+  };
+
+  const addFileInput = () => {
+    if (fileInputs.length < 5) {
+      setFileInputs([...fileInputs, { description: '', file: null }]);
+    } else {
+      openNotification(
+        "topRight",
+        "warning",
+        "Maximum file upload",
+        "You can only upload up to 5 files."
+      );
+    }
+  }
+
+  const removeFileInput = (index) => {
+    const newFileInputs = [...fileInputs];
+    newFileInputs.splice(index, 1);
+    setFileInputs(newFileInputs);
+  };
+
+
+  const handleOk = () => {
+    setIsLoading(true);
+    const token = window.sessionStorage.getItem("token");
+
+    if(!message){
+      openNotification(
+        "topRight",
+        "error",
+        "Error",
+        "Message field cannot be empty."
+      );
+      setIsLoading(false);
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('message', message);
+    formData.append('role', 'admin');
+  
+    // Filter out file inputs that have no file selected
+    const filesWithDescriptions = fileInputs.filter(input => input.file);
+    
+    // Check if every file has a corresponding description
+    const hasAllDescriptions = filesWithDescriptions.every(input => input.description.trim() !== '');
+  
+    if (!hasAllDescriptions) {
+      openNotification(
+        "topRight",
+        "error",
+        "Error",
+        "You need to provide a description for all files."
+      );
+      setIsLoading(false);
+      return;
+    }
+  
+    // Append files and descriptions to the formData
+    filesWithDescriptions.forEach((input) => {
+      formData.append('files', input.file);
+      formData.append('descriptions', input.description);
+    });
+  
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+    };
+  
+    axios.patch(`${process.env.REACT_APP_API_URL}/tickets/x/${ticketId}`, formData, { headers })
+      .then((response) => {
+        if (response.data.success) {
+          openNotification(
+            "topRight",
+            "success",
+            "Ticket reply sent successfully",
+            "Your ticket reply has been sent successfully."
+          );
+          setIsLoading(false);
+          setTimeout(() => {
+            window.location.href = `/admin/tickets/details/${ticketId}`;
+          }, 1000);
+        } else {
+          openNotification(
+            "topRight",
+            "error",
+            "Error",
+            "Failed to reply ticket"
+          );
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        openNotification(
+          "topRight",
+          "error",
+          "Error",
+          "An error occurred while replying the ticket."
+        );
+        setIsLoading(false);
+        console.error(error);
+      })
+
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'message') {
+      setMessage(value);
+    }
+    setSubmitButton(!!message);
   };
 
   return (
@@ -157,6 +291,28 @@ const TicketDetails = () => {
                       <span className="fw-bold">Description</span>
                       <span className="d-block ">{ticket.message}</span>
                     </li>
+
+                    {/* <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Supporting Dcouments</span>
+                      <span className="d-block ">{ticket.message}</span>
+                    </li> */}
+
+                    { ticket.files.length > 0 ? 
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                        <span className="fw-bold">Supporting Documents</span>
+                        <span className=" d-block">
+                          {ticket.files.map((file, index) => {
+                              return(
+                                <span className="">
+                                  <a href={getFileUrl(file.path)} target='_blank' key={index} rel="noreferrer">View {file.description}</a>
+                                  <br/>
+                                  </span>
+                              )
+                          }) }
+                          
+                        </span>
+                    </li>
+                    : '' }
                     
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Submitted On</span>
@@ -171,59 +327,41 @@ const TicketDetails = () => {
               </div>
             </div>
 
-            {ticket.files.length > 0 ? (
-             
-                        <div className="mt-5">
-                          
-                          <div className="text-bold" style={{ color: '#5b6e88'}}>Supporting Document(s)</div>
-                          <div class="row mb-4">
-                          
-                            {ticket.files.map((file, index) => (
-                              <div
-                                className="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-3"
-                                key={index}
-                              >
-                                <p className="text-bold center mb-3">
-                                  {file.description}
-                                </p>
-                                {file.extension}
 
-                                {file.path.split(".").pop().toLowerCase() ===
-                                  "jpg" ||
-                                file.path.split(".").pop().toLowerCase() ===
-                                  "png" ||
-                                file.path.split(".").pop().toLowerCase() ===
-                                  "jpeg" ? (
-                                  <div className="thumb mb-5">
-                                    <div className="avatar-preview center">
-                                      <div>
-                                        <Image
-                                          className="imagePreview"
-                                          // width={500}
-                                          src={file.path}
-                                          style={{
-                                            objectFit: "fill",
-                                          }}
-                                          alt={file.originalName}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <a href={file.path} download>
-                                    Download {file.originalName}
-                                  </a>
-                                )}
+            {ticket?.replies?.length > 0 ? (
+
+              <>
+               <hr />
+                <div className="nk-modal-head mb-1">
+                  <h5 className="title">Ticket Replies</h5>
+                </div>
+                {ticket.replies.map((reply, index) => {
+                  return (
+                    <div key={index} className={`col-lg-12 mb-1 ${reply.role === 'user' ? "" : "text-end"}`}>
+                      <span className="sub-text" style={{ fontWeight: "bold", color: "black" }} >{reply.role === 'user' ? `${ticket.userId.username}` : "BarterFunds"}</span>
+                      <span className="caption-text">{reply.message}</span>
+
+                      {reply.files.length > 0 && (
+                        <div className="col-lg-12">
+                          <span className="sub-text">Supporting Documents</span>
+                          <div className="col-lg-12">
+                            {reply.files.map((file, fileIndex) => (
+                              <div key={fileIndex} className="col-lg-12">
+                                <a href={getFileUrl(file.path)} className="text-end" target='_blank' key={index} rel="noreferrer">View {file.description}</a>
+                                <br />
                               </div>
                             ))}
                           </div>
                         </div>
-                      ) : (
-                        ""
                       )}
+                    </div>
+                  );
+                })}
+              </>
+            ) : ('')}
 
+                <hr/>
 
-            <hr />
             <div className="row">
               <div className="col-lg-12">
                 <div className="card">
@@ -231,7 +369,7 @@ const TicketDetails = () => {
                     <h6 className="card-title">
                       <div className="row">
                         <div className="col-sm-8 col-md-6">
-                          Enter response/comments here
+                          Reply ticket here
                         </div>
                       </div>
                     </h6>
@@ -241,25 +379,71 @@ const TicketDetails = () => {
                       <div className="row ">
                         <div className="col-md-12">
                           <div className="form-group">
-                            <textarea
-                              className="form-control"
-                              name="comments"
-                              rows="5"
-                              required
-                              id="comments"
-                              placeholder="Enter your response here..."
+                          <textarea
+                              className="form-control form-control-lg"
+                              placeholder="Enter message here..."
+                              name="message"
                               onChange={handleChange}
-                              value={
-                                ticket.comments ? ticket.comments : comments
-                              }
-                              disabled={ticket.status !== "open"}
                             ></textarea>
                           </div>
                         </div>
                       </div>
                     </form>
 
-                    {ticket.feedback ? (
+                    <div className="col-md-12">
+                                <div className="form-group">
+                                  <div className="form-label-group">
+                                    <label className="form-label">
+                                      Upload any supporting documents you may have, eg, Payment Screenshot, etc
+                                    </label>
+                                  </div>
+    
+                                  {fileInputs.map((input, index) => (
+                                    <div key={index} className="form-group">
+                                      <div className="form-control-group">
+                                        <input
+                                          type="text"
+                                          name="description"
+                                          className="col-md-6 mr-2 form-control-sm"
+                                          placeholder='Example: Payment Screenshot...'
+                                          value={input.description}
+                                          onChange={(e) => handleFileInputChange(index, e)}
+                                        />
+                                        <input
+                                          type="file"
+                                          name="file"
+                                          className='ml-1 form-control-sm'
+                                          onChange={(e) => handleFileInputChange(index, e)}
+                                        />
+                                        <span
+                                          
+                                          title="Add file"
+                                          className="btn btn--success btn-sm mx-1 text-white"
+                                          onClick={addFileInput}
+                                        >
+                                          <span className="icon material-symbols-outlined">
+                                            add
+                                          </span>
+                                        </span>
+                                        {index > 0 && (
+                                          <span
+                                           
+                                            title="Remove file"
+                                            className="btn btn--danger btn-sm text-white"
+                                            onClick={() => removeFileInput(index)}
+                                          >
+                                            <span className="icon material-symbols-outlined">
+                                              cancel
+                                            </span>
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                    {/* {ticket.feedback ? (
                       <div className="row mt-5">
                         <div className="col-md-12">
                           <div className="form-group ">
@@ -285,14 +469,25 @@ const TicketDetails = () => {
                       </div>
                     ) : (
                       ""
-                    )}
+                    )} */}
 
                     <div className="row mt-4">
                       <div className="col-md-12">
                         <div className="d-flex flex-wrap gap-3 mt-4">
-                          {ticket.status !== "resolved" && ticket.status !== "closed"  ?  (
+                       
+                          {/* {ticket.status !== "resolved" && ticket.status !== "closed"  ?  ( */}
                             <div className="flex-fill">
-                              <PageModal
+                               <button
+                                  type="button"
+                                  className="btn btn--success btn--shadow btn-lg center col-12"
+                                  onClick={handleOk}
+                                  disabled={!submitButton}
+                              >
+                                  <i className="las la-user-check" />
+                                  Reply Ticket
+                              </button>
+
+                              {/* <PageModal
                                 title={"Resolve Ticket"}
                                 content={
                                   "This ticket will be reolved. Are you sure you want to resolve this ticket?"
@@ -301,20 +496,20 @@ const TicketDetails = () => {
                                 status={"resolved"}
                                 updateUrl={`${process.env.REACT_APP_API_URL}/tickets/${ticket._id}`}
                                 className={
-                                  "btn btn--success btn--shadow w-100 btn-lg center"
+                                  "btn btn--success btn--shadow btn-lg col-6 center"
                                 }
                                 icon={"las la-user-check"}
                                 setIsLoading={setIsLoading}
                                 redirectTo={"tickets"}
                                 disabled={!submitButton}
-                                comments={comments}
-                              />
+                                // comments={comments}
+                              /> */}
                             </div>
-                          ) : (
-                            ""
-                          )}
+                          {/* // ) : (
+                          //   ""
+                          // )} */}
 
-                          {ticket.status === "resolved" ? (
+                          {/* {ticket.status === "resolved" ? (
                             <div className="flex-fill">
                               <PageModal
                                 title={"Close Ticket"}
@@ -335,7 +530,7 @@ const TicketDetails = () => {
                             </div>
                           ) : (
                             ""
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </div>

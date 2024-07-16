@@ -71,6 +71,19 @@ const Currencies = () => {
     setCurrentPage(pageNumber);
   };
 
+  const formatCurrency = (value) => {
+    const number = Number(value);
+
+    if (!Number.isFinite(number)) {
+      return "Invalid number";
+    }
+
+    return number.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
   return (
     <div className="page-wrapper default-version">
       <AdminSidebar active={"currency"} />
@@ -148,11 +161,11 @@ const Currencies = () => {
                                       </span>
                                     </div>
                                   </td>
-                                  <td>GHS {currency.buyAt}</td>
-                                  <td>GHS {currency.sellAt}</td>
-                                  <td>GHS {currency.sendAt}</td>
-                                  <td>GHS {currency.receiveAt}</td>
-                                  <td>GHS {currency.reserveAmount}</td>
+                                  <td>GHS {formatCurrency(currency.buyAt)}</td>
+                                  <td>GHS {formatCurrency(currency.sellAt)}</td>
+                                  <td>GHS {formatCurrency(currency.sendAt)}</td>
+                                  <td>GHS {formatCurrency(currency.receiveAt)}</td>
+                                  <td>GHS {formatCurrency(currency.reserveAmount)}</td>
                                   <td>
                                     {currency.status === "active" ? (
                                       <span className="badge badge--success">

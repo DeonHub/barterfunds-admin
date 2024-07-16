@@ -8,7 +8,7 @@ import AdminHeader from "./components/AdminHeader";
 const Notifications = () => {
   return (
     <div className="page-wrapper default-version">
-    <AdminSidebar />
+    <AdminSidebar active={'dashboard'}/>
     <AdminHeader />
     <>
 <div className="body-wrapper">

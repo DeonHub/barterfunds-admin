@@ -19,6 +19,7 @@ const Orders = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
   const searchParams = new URLSearchParams(location.search);
+  const [data, setData] = useState({})
   const userId = searchParams.get('userId');
 
 
@@ -43,9 +44,11 @@ const Orders = () => {
       })
       .then((response) => {
         if (response.data.success) {
+          // console.log(response.data)
           const sortedOrders = response.data.orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setOrders(sortedOrders);
           setCount(response.data.count);
+          setData(response.data.data);
           setIsLoading(false);
         } else {
           setOrders([]);
@@ -161,7 +164,7 @@ const Orders = () => {
                 <div className="widget-two box--shadow2 has-link b-radius--5 bg--success">
                   {/* <a href="../../admin/withdraw/approved" className="item-link" /> */}
                   <div className="widget-two__content">
-                    <h2 className="text-white">₵0.00</h2>
+                    <h2 className="text-white">GHS {formatCurrency(data?.totalApprovedOrders)}</h2>
                     <p className="text-white">Approved Withdrawals</p>
                   </div>
                 </div>
@@ -171,7 +174,7 @@ const Orders = () => {
                 <div className="widget-two box--shadow2 has-link b-radius--5 bg--6">
                   {/* <a href="../../admin/withdraw/pending" className="item-link" /> */}
                   <div className="widget-two__content">
-                    <h2 className="text-white">₵25,998.00</h2>
+                    <h2 className="text-white">GHS {formatCurrency(data?.totalPendingOrders)}</h2>
                     <p className="text-white">Pending Withdrawals</p>
                   </div>
                 </div>
@@ -181,7 +184,7 @@ const Orders = () => {
                 <div className="widget-two box--shadow2 b-radius--5 has-link bg--pink">
                   {/* <a href="../../admin/withdraw/rejected" className="item-link" /> */}
                   <div className="widget-two__content">
-                    <h2 className="text-white">₵0.00</h2>
+                    <h2 className="text-white">GHS {formatCurrency(data?.totalFailedOrders)}</h2>
                     <p className="text-white">Rejected Withdrawals</p>
                   </div>
                 </div>

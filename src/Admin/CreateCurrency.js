@@ -18,6 +18,7 @@ const CreateCurrency = ({ globalState }) => {
     currencyName: "",
     currencyLogo: "",
     currencyCode: "",
+    walletAddress: "",
     paymentGateway: "",
     buyAt: "",
     sellAt: "",
@@ -196,6 +197,19 @@ const CreateCurrency = ({ globalState }) => {
                                     placeholder={"Enter currency name"}
                                     label={"Currency Name"}
                                     inputname={"currencyName"}
+                                    inputtype={"text"}
+                                    onValueChange={handleChange}
+                                    showTooltip
+                                    toolTipMessage={"This is a required field"}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-xxl-4 col-sm-12">
+                                <div className="form-group">
+                                  <TextInput
+                                    placeholder={"Enter currency wallet address"}
+                                    label={"Currency Wallet Addres"}
+                                    inputname={"walletAddress"}
                                     inputtype={"text"}
                                     onValueChange={handleChange}
                                     showTooltip

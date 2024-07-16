@@ -131,6 +131,10 @@ const CurrencyDetails = () => {
                       <span className="d-block fw-bold">{currency.currencyCode}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Currency Wallet Address</span>
+                      <span className="d-block fw-bold">{currency.walletAddress}</span>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Exchange Rate</span>
                       <span className="d-block">1.00 USD = {formatCurrency(currency.exchangeRate)} GHS</span>
                     </li>

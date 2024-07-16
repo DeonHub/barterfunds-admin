@@ -106,24 +106,34 @@ class Login extends React.Component {
         .post(`${process.env.REACT_APP_API_URL}/auth/login`, body)
         .then((response) => {
           if (response.data.success) {
-            // setMessage('Login Successfully')
-            openNotification(
-              "topRight",
-              "success",
-              "Success",
-              "Login Successful"
-            );
-            
-            let token = response.data.token;
-            
-            window.sessionStorage.setItem("token", token);
-            window.sessionStorage.setItem("email", email);
-            // window.sessionStorage.setItem("userId", response.data.user._id);
 
-
-            setTimeout(() => {
-              this.props.navigate(`/admin/dashboard`);
-            }, 1000);
+            if(response.data.user.isAdmin) {
+              openNotification(
+                "topRight",
+                "success",
+                "Success",
+                "Login Successful"
+              );
+              
+              let token = response.data.token;
+              
+              window.sessionStorage.setItem("token", token);
+              window.sessionStorage.setItem("email", email);
+              // window.sessionStorage.setItem("userId", response.data.user._id);
+  
+  
+              setTimeout(() => {
+                this.props.navigate(`/admin/dashboard`);
+              }, 1000);
+            } else{
+              openNotification(
+                "topRight",
+                "error",
+                "Could not Login to your account",
+                "Invalid email address or password"
+              );
+            }
+            
           }
         })
         .catch((error) => {
@@ -131,7 +141,7 @@ class Login extends React.Component {
             "topRight",
             "error",
             "Could not Login to your account",
-            error.response.data.message
+            "Invalid email address or password"
           );
           this.setState({
             email: "",

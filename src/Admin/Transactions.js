@@ -68,8 +68,8 @@ const Transactions = () => {
         .includes(searchTerm.toLowerCase()) || transaction.transactionId
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) || transaction.userId.username
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) 
+        .toLowerCase() 
+        .includes(searchTerm.toLowerCase())
   );
 
   // Calculate pagination

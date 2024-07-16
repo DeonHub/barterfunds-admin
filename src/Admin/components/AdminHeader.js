@@ -55,13 +55,13 @@ const AdminHeader = () => {
             <div className="dropdown-menu__body">
 
               <a
-                href="notification/read/461.html"
+                href="/"
                 className="dropdown-menu__item"
               >
                 <div className="navbar-notifi">
                   <div className="navbar-notifi__left bg--green b-radius--rounded">
                     <img
-                      src="../../placeholder-image/350x300"
+                      src="/assets/images/default.png"
                       alt="Profile"
                     />
                   </div>
@@ -96,10 +96,10 @@ const AdminHeader = () => {
           >
             <span className="navbar-user">
               <span className="navbar-user__thumb">
-                <img src="/assets/images/default.png" alt="default" />
+                <img src="/assets/images/icon.png" alt="default" />
               </span>
               <span className="navbar-user__info">
-                <span className="navbar-user__name">admin</span>
+                <span className="navbar-user__name">Admin</span>
               </span>
               <span className="icon">
                 <i className="las la-chevron-circle-down" />
@@ -108,7 +108,7 @@ const AdminHeader = () => {
           </button>
           <div className="dropdown-menu dropdown-menu--sm p-0 border-0 box--shadow1 dropdown-menu-right">
             <a
-              href="profile.html"
+              href={"/admin/dashboard"}
               className="dropdown-menu__item d-flex align-items-center px-3 py-2"
             >
               <i className="dropdown-menu__icon las la-user-circle" />

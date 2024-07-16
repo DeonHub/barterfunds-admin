@@ -4,7 +4,7 @@ import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
 
-import { Image, Avatar } from "antd";
+import { Avatar } from "antd";
 import Loader from "../components/Loader";
 import axios from "axios";
 import PageModal from "../components/PageModal";
@@ -33,6 +33,7 @@ const KycDetails = () => {
       .get(`${process.env.REACT_APP_API_URL}/kycs/${kycId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
+          // console.log(response.data.kyc)
           setKyc(response.data.kyc);
           setIsLoading(false);
           // setGlobalState((prevState) => ({
@@ -59,6 +60,13 @@ const KycDetails = () => {
 
   const handleBack = () => {
     navigate(-1);  // Go back to the previous page
+  };
+
+  const getFileUrl = (filepath) => {
+    if (filepath?.startsWith('uploads')) {
+      return `${process.env.REACT_APP_API_URL}/${filepath}`;
+    }
+    return filepath;
   };
 
   return (
@@ -160,7 +168,7 @@ const KycDetails = () => {
                                 <input
                                   type="text"
                                   name="mobile"
-                                  value={kyc.contact}
+                                  value={`+${kyc.contact}`}
                                   disabled
                                   id="mobile"
                                   className="form-control "
@@ -210,7 +218,7 @@ const KycDetails = () => {
                         </div>
 
                         <div className="row mt-4">
-                          <div className="col-md-12">
+                          <div className="col-md-6">
                             <div className="form-group ">
                               <label>Residential Address</label>
                               <input
@@ -222,7 +230,7 @@ const KycDetails = () => {
                               />
                             </div>
                           </div>
-                          <div className="col-xl-3 col-md-6">
+                          <div className="col-xl-6 col-md-6">
                             <div className="form-group ">
                               <label>Country</label>
                               <input
@@ -235,7 +243,7 @@ const KycDetails = () => {
                             </div>
                           </div>
 
-                          <div className="col-xl-3 col-md-6">
+                          <div className="col-xl-4 col-md-6">
                             <div className="form-group ">
                               <label>State/Region</label>
                               <input
@@ -247,7 +255,7 @@ const KycDetails = () => {
                               />
                             </div>
                           </div>
-                          <div className="col-xl-3 col-md-6">
+                          <div className="col-xl-4 col-md-6">
                             <div className="form-group">
                               <label>City/Town</label>
                               <input
@@ -259,7 +267,7 @@ const KycDetails = () => {
                               />
                             </div>
                           </div>
-                          <div className="col-xl-3 col-md-6">
+                          <div className="col-xl-4 col-md-6">
                             <div className="form-group ">
                               <label>Postal Address</label>
                               <input
@@ -275,7 +283,7 @@ const KycDetails = () => {
 
                         <hr />
                         <div className="row">
-                          <div className="col-md-6">
+                          <div className="col-md-4">
                             <div className="form-group ">
                               <label>Identity Document Type</label>
                               <input
@@ -287,7 +295,7 @@ const KycDetails = () => {
                               />
                             </div>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-4">
                             <div className="form-group">
                               <label className="form-control-label">
                                 Identity Document Number
@@ -297,6 +305,20 @@ const KycDetails = () => {
                                 type="text"
                                 name="lastname"
                                 value={kyc.identityDocumentNumber}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-4">
+                            <div className="form-group">
+                              <label className="form-control-label">
+                                Issuing Authority
+                              </label>
+                              <input
+                                className="form-control"
+                                type="text"
+                                name="lastname"
+                                value={kyc.issuingAuthority}
                                 disabled
                               />
                             </div>
@@ -340,14 +362,10 @@ const KycDetails = () => {
                             <div className="thumb mb-5">
                               <div className="avatar-preview center">
                                 <div>
-                                  <Image
-                                    className="imagePreview"
-                                    // width={500}
-                                    src={kyc.frontImage}
-                                    style={{
-                                      objectFit: "fill",
-                                    }}
-                                  />
+                                
+                                  <a href={getFileUrl(kyc.frontImage)} target='_blank' rel="noreferrer" className="caption-text">View ID Card Front</a>
+                        
+                                  
                                 </div>
                               </div>
                             </div>
@@ -358,19 +376,54 @@ const KycDetails = () => {
                             <div className="thumb mb-2">
                               <div className="avatar-preview center">
                                 <div>
-                                  <Image
-                                    className="imagePreview"
-                                    // width={500}
-                                    src={kyc.backImage}
-                                    style={{
-                                      objectFit: "fill",
-                                    }}
-                                  />
+                                <a href={getFileUrl(kyc.backImage)} target='_blank' rel="noreferrer" className="caption-text">View ID Card Back</a>
+                                  
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group ">
+                              <label>Proof of Address Document Uploaded</label>
+                              <input
+                                className="form-control"
+                                type="text"
+                                name="firstname"
+                                value={kyc.proofDocumentUploaded}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          {/* <div className="col-md-6">
+                            <div className="form-group">
+                              <label className="form-control-label">
+                                View Proof of Address
+                              </label>
+                              <input
+                                className="form-control"
+                                type="text"
+                                name="lastname"
+                                value={formatDate(kyc.expiryDate)}
+                                disabled
+                              />
+                            </div>
+                          </div> */}
+                          <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
+                            <p className="bold center mb-3">Proof of Address</p>
+                            <div className="thumb mb-2">
+                              <div className="avatar-preview center">
+                                <div>
+                                <a href={getFileUrl(kyc.proofOfAddress)} target='_blank' rel="noreferrer" className="caption-text">View Proof of Address</a>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
 
                         {kyc.status === "pending" ? (
                           <div className="row mt-4">

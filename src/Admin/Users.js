@@ -183,6 +183,7 @@ const Users = () => {
                                   {user.lastLogin ? formatTime(user.lastLogin) : 'Not Logged In'}
                                 </td>
                                 <td>
+                                  
                                   {user.status === "active" ? (
                                     <span className="badge badge--success">
                                       Active

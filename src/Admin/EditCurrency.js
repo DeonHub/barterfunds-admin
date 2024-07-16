@@ -86,12 +86,12 @@ const EditCurrency = () => {
   }, [navigate, currencyId]);
 
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
+    const { name, value, type, checked, files } = e.target;
 
     // Check if the event target is a checkbox or select element
     const newValue =
       type === "checkbox"
-        ? ''
+        ? checked
         : type === "file"
         ? files[0]
         : value;
@@ -103,6 +103,7 @@ const EditCurrency = () => {
     }));
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle form submission here
@@ -113,7 +114,7 @@ const EditCurrency = () => {
       body.append(key, currency[key]);
     }
     // Example: Send formDataToSend to server using fetch or axios
-    // console.log(body);
+    console.log(body);
 
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -132,9 +133,6 @@ const EditCurrency = () => {
             "Currency Edit Successful",
             "Currency has been successfully updated. Redirecting to currency list page."
           );
-          // console.log("response.data :>> ", response.data);
-          // setPassword("");
-          // setConfirmPassword("");
 
           setTimeout(() => {
             window.location.href = `/admin/currencies`;
@@ -230,6 +228,18 @@ const EditCurrency = () => {
                                   />
                                 </div>
                               </div>
+                              <div className="col-xxl-4 col-sm-12">
+                                <div className="form-group">
+                                  <TextInput
+                                    placeholder={"Enter currency wallet address"}
+                                    label={"Currency Wallet Address"}
+                                    inputname={"walletAddress"}
+                                    inputtype={"text"}
+                                    onValueChange={handleChange}
+                                    value={currency.walletAddress}
+                                  />
+                                </div>
+                              </div>
                               <div className="col-xxl-4 col-sm-6">
                                 <div className="form-group">
                                   <TextInput
@@ -316,7 +326,7 @@ const EditCurrency = () => {
                                       className="form-control"
                                       name="buyAt"
                                       onChange={handleChange}
-                                      value={currency.buyAt}
+                                      value={currency.buyAt || 0}
                                     />
                                     <span className="input-group-text">
                                       GHS
@@ -333,7 +343,7 @@ const EditCurrency = () => {
                                       step="any"
                                       className="form-control"
                                       name="sellAt"
-                                      value={currency.sellAt}
+                                      value={currency.sellAt || 0}
                                       onChange={handleChange}
                                     />
                                     <span className="input-group-text">
@@ -351,7 +361,7 @@ const EditCurrency = () => {
                                       step="any"
                                       className="form-control"
                                       name="sendAt"
-                                      value={currency.sendAt}
+                                      value={currency.sendAt || 0}
                                       onChange={handleChange}
                                     />
                                     <span className="input-group-text">
@@ -369,7 +379,7 @@ const EditCurrency = () => {
                                       step="any"
                                       className="form-control"
                                       name="receiveAt"
-                                      value={currency.receiveAt}
+                                      value={currency.receiveAt || 0}
                                       onChange={handleChange}
                                     />
                                     <span className="input-group-text">
@@ -386,7 +396,7 @@ const EditCurrency = () => {
                                       type="number"
                                       className="form-control"
                                       name="exchangeRate"
-                                      value={currency.exchangeRate || ""}
+                                      value={currency.exchangeRate || 0}
                                       onChange={handleChange}
                                     />
                                     <span className="input-group-text">
@@ -404,7 +414,7 @@ const EditCurrency = () => {
                                       step="any"
                                       className="form-control"
                                       name="reserveAmount"
-                                      value={currency.reserveAmount}
+                                      value={currency.reserveAmount || 0}
                                       onChange={handleChange}
                                     />
                                     <span className="input-group-text">
@@ -501,7 +511,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.minimumBuyAmount}
+                                value={currency.minimumBuyAmount || 0}
                                 className="form-control rounded"
                                 name="minimumBuyAmount"
                                 required=""
@@ -515,7 +525,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.maximumBuyAmount}
+                                value={currency.maximumBuyAmount || 0}
                                 className="form-control rounded"
                                 name="maximumBuyAmount"
                                 required=""
@@ -529,7 +539,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.buyFixedCharge}
+                                value={currency.buyFixedCharge || 0}
                                 className="form-control rounded"
                                 name="buyFixedCharge"
                                 required=""
@@ -543,7 +553,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.buyPercentCharge}
+                                value={currency.buyPercentCharge || 0}
                                 className="form-control"
                                 name="buyPercentCharge"
                                 required=""
@@ -569,7 +579,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.minimumSellAmount}
+                                value={currency.minimumSellAmount || 0}
                                 className="form-control rounded"
                                 name="minimumSellAmount"
                                 required=""
@@ -583,7 +593,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.maximumSellAmount}
+                                value={currency.maximumSellAmount || 0}
                                 className="form-control rounded"
                                 name="maximumSellAmount"
                                 required=""
@@ -597,7 +607,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.sellFixedCharge}
+                                value={currency.sellFixedCharge || 0}
                                 className="form-control rounded"
                                 name="sellFixedCharge"
                                 required=""
@@ -611,7 +621,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.sellPercentCharge}
+                                value={currency.sellPercentCharge || 0}
                                 className="form-control"
                                 name="sellPercentCharge"
                                 required=""
@@ -637,7 +647,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.minimumSendAmount}
+                                value={currency.minimumSendAmount || 0}
                                 className="form-control rounded"
                                 name="minimumSendAmount"
                                 required=""
@@ -651,7 +661,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.maximumSendAmount}
+                                value={currency.maximumSendAmount || 0}
                                 className="form-control rounded"
                                 name="maximumSendAmount"
                                 required=""
@@ -665,7 +675,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.sendFixedCharge}
+                                value={currency.sendFixedCharge || 0}
                                 className="form-control rounded"
                                 name="sendFixedCharge"
                                 required=""
@@ -679,7 +689,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.sendPercentCharge}
+                                value={currency.sendPercentCharge || 0}
                                 className="form-control"
                                 name="sendPercentCharge"
                                 required=""
@@ -705,7 +715,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.minimumReceiveAmount}
+                                value={currency.minimumReceiveAmount || 0}
                                 className="form-control rounded"
                                 name="minimumReceiveAmount"
                                 required=""
@@ -719,7 +729,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.maximumReceiveAmount}
+                                value={currency.maximumReceiveAmount || 0}
                                 className="form-control rounded"
                                 name="maximumReceiveAmount"
                                 required=""
@@ -733,7 +743,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.receiveFixedCharge}
+                                value={currency.receiveFixedCharge || 0}
                                 className="form-control rounded"
                                 name="receiveFixedCharge"
                                 required=""
@@ -747,7 +757,7 @@ const EditCurrency = () => {
                             <div className="input-group">
                               <input
                                 type="number"
-                                value={currency.receivePercentCharge}
+                                value={currency.receivePercentCharge || 0}
                                 className="form-control"
                                 name="receivePercentCharge"
                                 required=""
