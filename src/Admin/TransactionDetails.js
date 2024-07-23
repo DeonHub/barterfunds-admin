@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { Image } from "antd";
+// import { Image } from "antd";
 import axios from "axios";
 import PageModal from "../components/PageModal";
 import Loader from "../components/Loader";
@@ -103,6 +103,14 @@ const TransactionDetails = () => {
   const handleBack = () => {
     navigate(-1);  // Go back to the previous page
   };
+
+  const getFileUrl = (path) => {
+    if (path.startsWith('uploads')) {
+      return `${process.env.REACT_APP_API_URL}/${path}`;
+    }
+    return path;
+  };
+
 
   return (
     <div className="page-wrapper default-version">
@@ -255,7 +263,10 @@ const TransactionDetails = () => {
                   <h5>Transaction Proof</h5>
                 </div>
                 <div className="card-body">
-                  <Image src={transaction.paymentProof} />
+                  {/* <Image src={transaction.paymentProof} /> */}
+                  <div className="text-center">
+                        <a href={getFileUrl(transaction.paymentProof)} target='_blank' rel="noreferrer">View Payment Proof</a>
+                      </div>
                   
                 </div>
               </div>
