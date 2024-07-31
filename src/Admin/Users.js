@@ -29,7 +29,8 @@ const Users = () => {
       .get(`${process.env.REACT_APP_API_URL}/users`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          setUsers(response.data.users);
+          const sortedUsers = response.data.users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setUsers(sortedUsers);
           setIsLoading(false);
 
           // if(response.data.currencies === globalState.currencies){

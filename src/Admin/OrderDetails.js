@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import { Image } from "antd";
 import axios from "axios";
 import PageModal from "../components/PageModal";
 // import OpenModal from "../components/OpenModal";
@@ -97,6 +96,15 @@ const OrderDetails = () => {
     navigate(-1);  // Go back to the previous page
   };
 
+
+  const getFileUrl = (path) => {
+    if (path.startsWith('uploads')) {
+      return `${process.env.REACT_APP_API_URL}/${path}`;
+    }
+    return path;
+  };
+
+
   return (
     <div className="page-wrapper default-version">
       <AdminSidebar active={'order'}/>
@@ -167,14 +175,14 @@ const OrderDetails = () => {
                       <span className="fw-bold">Total Amount</span>
                       <div className="text-end">
                       <span className="d-block fw-bold">{formatCurrency(order.amountGhs)} GHS</span>
-                            <span className="d-block fw-bold">{formatCurrency(order.amountUsd)} USD</span>
+                            {/* <span className="d-block fw-bold">{formatCurrency(order.amountUsd)} USD</span> */}
                       </div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Balance</span>
                       <div className="text-end">
                       <span className="d-block fw-bold">{formatCurrency(order.balanceGhs)} GHS</span>
-                            <span className="d-block fw-bold">{formatCurrency(order.balanceGhs)} USD</span>
+                            {/* <span className="d-block fw-bold">{formatCurrency(order.balanceGhs)} USD</span> */}
                       </div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
@@ -243,14 +251,18 @@ const OrderDetails = () => {
                   <h5>Order Proof</h5>
                 </div>
                 <div className="card-body">
-                  <Image src={order.paymentProof} />
-                  
+                  {/* <Image src={order.paymentProof} /> */}
+                  <div className="text-center">
+                        <a href={getFileUrl(order.paymentProof)} target='_blank' rel="noreferrer">View Order Proof</a>
+                      </div>
                 </div>
               </div>
               ) : (
                 ''
               )}
               
+              
+
               {order.status === 'pending' && (
                 <div className="d-flex flex-wrap justify-content-end mb-3 gap-2 mt-5">
                 
@@ -273,9 +285,9 @@ const OrderDetails = () => {
                 />
   
   <PageModal
-                  title={"Cancel Order"}
+                  title={"Reject Order"}
                   content={
-                    "This order will be cancelled. Are you sure you want to cancel this order?"
+                    "This order will be rejected. Are you sure you want to reject this order?"
                   }
                   action={order.action}
                   status={"cancelled"}

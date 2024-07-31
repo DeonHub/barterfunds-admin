@@ -36,7 +36,8 @@ const Kycs = () => {
       .get(`${process.env.REACT_APP_API_URL}/kycs`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          setKycs(response.data.kycs);
+          const sortedKycs = response.data.kycs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setKycs(sortedKycs);
           setIsLoading(false);
           // if(response.data.currencies === globalState.currencies){
           //   setCurrencies(globalState.currencies )

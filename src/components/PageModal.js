@@ -4,7 +4,7 @@ import { Modal, Button } from "antd";
 import openNotification from "./OpenNotification";
 import axios from "axios";
 
-const PageModal = ({ title, content, updateUrl, status, action, className, icon, setIsLoading, redirectTo, disabled, comments }) => {
+const PageModal = ({ title, content, updateUrl, status, action, className, icon, setIsLoading, redirectTo, disabled, comments, transaction }) => {
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
@@ -12,6 +12,17 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
   };
 
   const handleOk = () => {
+    if(transaction?.amountGhs > transaction?.currencyId?.reserveAmount){
+      openNotification(
+        "topRight",
+        "error",
+        "Insufficient funds",
+        "You do not have enough funds to approve this transaction. Please top up to approve this transaction."
+      );
+
+      return;
+    }
+
     setIsLoading(true);
     
     const token = window.sessionStorage.getItem("token");

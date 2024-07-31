@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Admin.css";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
@@ -8,12 +8,18 @@ import Loader from "../components/Loader";
 
 const Tickets = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [tickets, setTickets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const searchParams = new URLSearchParams(location.search);
+  const userId = searchParams.get('userId');
+
 
   useEffect(() => {
     document.title = "Support Tickets | BarterFunds";
     const token = window.sessionStorage.getItem("token");
+    const url = `${process.env.REACT_APP_API_URL}/tickets${userId ? `/z/user/${userId}` : ''}`;
+
 
     if (!token) {
       navigate('/login');
@@ -25,7 +31,7 @@ const Tickets = () => {
     };
 
     axios
-      .get(`${process.env.REACT_APP_API_URL}/tickets`, { headers: headers })
+      .get(url, { headers: headers })
       .then((response) => {
         if (response.data.success) {
           const sortedTickets = response.data.tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -39,7 +45,7 @@ const Tickets = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [navigate]);
+  }, [navigate, userId]);
 
 
   const [searchTerm, setSearchTerm] = useState("");

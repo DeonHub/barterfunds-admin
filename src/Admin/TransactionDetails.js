@@ -186,12 +186,32 @@ const TransactionDetails = () => {
                       </div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
-                      <span className="fw-bold">Total Amount</span>
+                      <span className="fw-bold">Exchange Rate</span>
                       <div className="text-end">
-                      <span className="d-block fw-bold">{formatCurrency(transaction.amountGhs)} GHS</span>
-                            <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span>
+                      <span className="d-block fw-bold">1 USD = {formatCurrency(transaction.exchangeRate)} GHS</span>
+                            {/* <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span> */}
                       </div>
                     </li>
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Transaction Fee</span>
+                      <div className="text-end">
+                      <span className="d-block fw-bold">{formatCurrency(transaction.transactionFee)} GHS</span>
+                            {/* <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span> */}
+                      </div>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Amount Paid</span>
+                      <div className="text-end">
+                      <span className="d-block fw-bold">{formatCurrency(transaction.amountGhs)} GHS</span>
+                            {/* <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span> */}
+                      </div>
+                    </li>
+                    {/* <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Reserve Amount</span>
+                      <div className="text-end">
+                      <span className="d-block fw-bold">{formatCurrency(transaction?.currencyId?.reserveAmount)} GHS</span>
+                      </div>
+                    </li> */}
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Payment Method</span>
                       <div className="text-end">
@@ -217,6 +237,16 @@ const TransactionDetails = () => {
                             <span className="d-block fw-bold">{transaction.walletAddress ? transaction.walletAddress : transaction.receipientNumber}</span>
                       </div>
                     </li>
+
+                    {transaction?.qrCode && (
+                       <li className="list-group-item d-flex justify-content-between flex-wrap">
+                       <span className="fw-bold">Wallet QR Code</span>
+                       <div className="text-end">
+                        <a href={getFileUrl(transaction?.qrCode)} target='_blank' rel="noreferrer">View Wallet QR Code</a>
+                       </div>
+                     </li>
+                    )}
+                    
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold"> Status</span>
                       <div className="text-end">
@@ -227,6 +257,10 @@ const TransactionDetails = () => {
                                   ) : transaction.status === "pending" ? (
                                     <span className="badge badge--primary">
                                       Pending
+                                    </span>
+                                  ) : transaction.status === "processing" ? (
+                                    <span className="badge badge--warning">
+                                      Processing
                                     </span>
                                   ) : transaction.status === "cancelled" ? (
                                     <span className="badge badge--warning">
@@ -273,64 +307,72 @@ const TransactionDetails = () => {
               ) : (
                 ''
               )}
-              
-              {transaction.status === 'pending' && (
+
+              {transaction.status !== 'success' && transaction.status !== 'cancelled' ? (
                 <div className="d-flex flex-wrap justify-content-end mb-3 gap-2 mt-5">
-                <PageModal
-                  title={"Confirm Payment"}
-                  content={
-                    "This transaction's payment will be confirmed. Are you sure you want to confirm payment?"
-                  }
-                  action={"Transaction's payment confirmed."}
-                  status={"pending"}
-                  updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
-                  className={
-                    "btn btn--warning btn-refund flex-grow-1"
-                  }
-                  icon={"fas fa-check-circle"}
-                  setIsLoading={setIsLoading}
-                  redirectTo={"transactions"}
-                
-                />
-  
-  <PageModal
-                  title={"Approve Transaction"}
-                  content={
-                    "This transaction will be approved successfully. Are you sure you want to approve transaction?"
-                  }
-                  action={"Transaction succefully approved."}
-                  status={"success"}
-                  updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
-                  className={
-                    "btn btn--success btn-approved flex-grow-1"
-                  }
-                  icon={"fas fa-check"}
-                  setIsLoading={setIsLoading}
-                  redirectTo={"transactions"}
-                
-                />
-  
-  <PageModal
-                  title={"Cancel Transaction"}
-                  content={
-                    "This transaction will be cancelled. Are you sure you want to cancel this transaction?"
-                  }
-                  action={"Transaction has been cancelled."}
-                  status={"cancelled"}
-                  updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
-                  className={
-                    "btn--danger btn btn-cancel flex-grow-1"
-                  }
-                  icon={"fas fa-times-circle"}
-                  setIsLoading={setIsLoading}
-                  redirectTo={"transactions"}
-                
-                />
-                      
-                      
-                     
-                    </div>
+                {transaction.status !== 'processing' && (
+                  
+                  <PageModal
+                    title={"Confirm Payment"}
+                    content={
+                      "This transaction's payment will be confirmed. Are you sure you want to confirm payment?"
+                    }
+                    action={"Transaction's payment confirmed."}
+                    status={"processing"}
+                    updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
+                    className={
+                      "btn btn--warning btn-refund flex-grow-1"
+                    }
+                    icon={"fas fa-check-circle"}
+                    setIsLoading={setIsLoading}
+                    redirectTo={"transactions"}
+                  
+                  />
+                )}
+                  
+    
+    <PageModal
+                    title={"Approve Transaction"}
+                    content={
+                      "This transaction will be approved successfully. Are you sure you want to approve transaction?"
+                    }
+                    action={"Transaction succefully approved."}
+                    status={"success"}
+                    updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
+                    className={
+                      "btn btn--success btn-approved flex-grow-1"
+                    }
+                    icon={"fas fa-check"}
+                    setIsLoading={setIsLoading}
+                    redirectTo={"transactions"}
+                    transaction={transaction}
+                  />
+    
+    <PageModal
+                    title={"Cancel Transaction"}
+                    content={
+                      "This transaction will be cancelled. Are you sure you want to cancel this transaction?"
+                    }
+                    action={"Transaction has been cancelled."}
+                    status={"cancelled"}
+                    updateUrl={`${process.env.REACT_APP_API_URL}/transactions/${transaction._id}`}
+                    className={
+                      "btn--danger btn btn-cancel flex-grow-1"
+                    }
+                    icon={"fas fa-times-circle"}
+                    setIsLoading={setIsLoading}
+                    redirectTo={"transactions"}
+                  
+                  />
+
+                      </div>
+              ) : (
+                <div className="d-flex flex-wrap justify-content-center mb-3 gap-2 text-black text-center mt-5">
+                This transaction has been {transaction.status === 'success' ? 'Approved.' : 'Cancelled.'} No further action is required.
+                </div>
               )}
+              
+            
               
             </div>
           </div>

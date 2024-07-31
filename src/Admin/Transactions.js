@@ -161,6 +161,7 @@ const Transactions = () => {
           <div className="row mt-3">
             <div className="col-lg-12">
               <div className="card b-radius--10 ">
+                
                 <div className="card-body p-0">
                   <div className="table-responsive--md  table-responsive">
                     <table className="table table--light style--two">
@@ -219,7 +220,7 @@ const Transactions = () => {
                           </td>
                           <td>
                             <span className="d-block">{formatCurrency(transaction.amountGhs)} GHS</span>
-                            <span>{formatCurrency(transaction.amountUsd)} USD</span>
+                            {/* <span>{formatCurrency(transaction.amountUsd)} USD</span> */}
                           </td>
 
                           <td>
@@ -235,6 +236,10 @@ const Transactions = () => {
                                   ) : transaction.status === "pending" ? (
                                     <span className="badge badge--primary">
                                       Pending
+                                    </span>
+                                  ) : transaction.status === "processing" ? (
+                                    <span className="badge badge--warning">
+                                      Processing
                                     </span>
                                   ) : transaction.status === "cancelled" ? (
                                     <span className="badge badge--warning">
@@ -263,6 +268,8 @@ const Transactions = () => {
                     </table>
                   </div>
                 </div>
+
+
                 {currentPageData.length === 0 ? (
                     <p></p>
                   ) : (

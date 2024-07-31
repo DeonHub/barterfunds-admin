@@ -240,7 +240,7 @@ const AdminDashboard = () => {
                   <div className="card-body" style={{ cursor: 'pointer'}} onClick={(() => {navigate('/admin/tickets')})}>
                     <div className="row align-items-center">
                       <div className="col-4">
-                        <i className="la las la-users f-size--56 f-size--56 text--white" />
+                        <i className="la las la-ticket f-size--56 f-size--56 text--white" />
                       </div>
                       <div className="col-8 text-end">
                         <span className="text--white text--small">
@@ -278,7 +278,7 @@ const AdminDashboard = () => {
                   <div className="card-body" style={{ cursor: 'pointer'}} onClick={(() => {navigate('/admin/transactions')})}>
                     <div className="row align-items-center">
                       <div className="col-4">
-                        <i className="la las la-user-times f-size--56 f-size--56 text--white" />
+                        <i className="la las la-money-bill f-size--56 f-size--56 text--white" />
                       </div>
                       <div className="col-8 text-end">
                         <span className="text--white text--small">
@@ -297,7 +297,7 @@ const AdminDashboard = () => {
                   <div className="card-body" style={{ cursor: 'pointer'}} onClick={(() => {navigate('/admin/orders')})}>
                     <div className="row align-items-center">
                       <div className="col-4">
-                        <i className="la las la-user-shield f-size--56 f-size--56 text--white" />
+                        <i className="la las la-bank f-size--56 f-size--56 text--white" />
                       </div>
                       <div className="col-8 text-end">
                         <span className="text--white text--small">
@@ -337,6 +337,9 @@ const AdminDashboard = () => {
                     </div>
                 )
               })}
+              
+
+
               
               
               <div className="row mb-none-30 mt-5">

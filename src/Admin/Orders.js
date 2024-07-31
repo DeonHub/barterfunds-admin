@@ -164,7 +164,7 @@ const Orders = () => {
                 <div className="widget-two box--shadow2 has-link b-radius--5 bg--success">
                   {/* <a href="../../admin/withdraw/approved" className="item-link" /> */}
                   <div className="widget-two__content">
-                    <h2 className="text-white">GHS {formatCurrency(data?.totalApprovedOrders)}</h2>
+                    <h2 className="text-white">GHS {formatCurrency(data?.totalApprovedOrders || 0)}</h2>
                     <p className="text-white">Approved Withdrawals</p>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ const Orders = () => {
                 <div className="widget-two box--shadow2 has-link b-radius--5 bg--6">
                   {/* <a href="../../admin/withdraw/pending" className="item-link" /> */}
                   <div className="widget-two__content">
-                    <h2 className="text-white">GHS {formatCurrency(data?.totalPendingOrders)}</h2>
+                    <h2 className="text-white">GHS {formatCurrency(data?.totalPendingOrders || 0)}</h2>
                     <p className="text-white">Pending Withdrawals</p>
                   </div>
                 </div>
@@ -184,7 +184,7 @@ const Orders = () => {
                 <div className="widget-two box--shadow2 b-radius--5 has-link bg--pink">
                   {/* <a href="../../admin/withdraw/rejected" className="item-link" /> */}
                   <div className="widget-two__content">
-                    <h2 className="text-white">GHS {formatCurrency(data?.totalFailedOrders)}</h2>
+                    <h2 className="text-white">GHS {formatCurrency(data?.totalFailedOrders || 0)}</h2>
                     <p className="text-white">Rejected Withdrawals</p>
                   </div>
                 </div>
@@ -201,7 +201,6 @@ const Orders = () => {
                           <th>User Details</th>
                           <th>Amount</th>
                           <th>Balance</th>
-                          
                           <th>Order Date</th>
                           <th>Status</th>
                           <th>Action</th>
@@ -217,7 +216,6 @@ const Orders = () => {
                               <tr>
                           <td>
                           <div className="user">
-                                      
                                       <span className="name fw-bold">
                                         {order.orderId}<br/>
                                         <small className="text--primary">
@@ -244,12 +242,12 @@ const Orders = () => {
                           
                           <td>
                             <span className="d-block">{formatCurrency(order.amountGhs)} GHS</span>
-                            <span>{formatCurrency(order.amountUsd)} USD</span>
+                            {/* <span>{formatCurrency(order.amountUsd)} USD</span> */}
                           </td>
 
                           <td>
                             <span className="d-block">{formatCurrency(order.balanceGhs)} GHS</span>
-                            <span>{formatCurrency(order.balanceUsd)} USD</span>
+                            {/* <span>{formatCurrency(order.balanceUsd)} USD</span> */}
                           </td>
 
                           <td>
