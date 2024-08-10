@@ -242,7 +242,7 @@ const Transactions = () => {
                                       Processing
                                     </span>
                                   ) : transaction.status === "cancelled" ? (
-                                    <span className="badge badge--warning">
+                                    <span className="badge badge--danger">
                                       Cancelled
                                     </span>
                                   ) : (

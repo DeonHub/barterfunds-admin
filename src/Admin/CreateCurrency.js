@@ -570,7 +570,7 @@ const CreateCurrency = ({ globalState }) => {
                                 required=""
                                 onChange={handleChange}
                               />
-                              <span className="input-group-text">GHS</span>
+                              <span className="input-group-text">USD</span>
                             </div>
                           </div>
                           <div className="form-group col-lg-6">
@@ -706,7 +706,7 @@ const CreateCurrency = ({ globalState }) => {
                                 required=""
                                 onChange={handleChange}
                               />
-                              <span className="input-group-text">GHS</span>
+                              <span className="input-group-text">USD</span>
                             </div>
                           </div>
                           <div className="form-group col-lg-6">
@@ -732,7 +732,7 @@ const CreateCurrency = ({ globalState }) => {
                 <div className="forManualGateway my-4">
                   <div className="card">
                     <h5 className="card-header">
-                      Instruction{" "}
+                      Instructions{" "}
                       <i
                         className="fa fa-info-circle text--primary"
                         title="Write the payment instruction here. Users will see the instruction while exchanging money."

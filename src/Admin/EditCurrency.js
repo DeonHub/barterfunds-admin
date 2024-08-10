@@ -613,7 +613,7 @@ const EditCurrency = () => {
                                 required=""
                                 onChange={handleChange}
                               />
-                              <span className="input-group-text">GHS</span>
+                              <span className="input-group-text">USD</span>
                             </div>
                           </div>
                           <div className="form-group col-lg-6">
@@ -749,7 +749,7 @@ const EditCurrency = () => {
                                 required=""
                                 onChange={handleChange}
                               />
-                              <span className="input-group-text">GHS</span>
+                              <span className="input-group-text">USD</span>
                             </div>
                           </div>
                           <div className="form-group col-lg-6">
