@@ -32,7 +32,7 @@ const TransactionDetails = () => {
       .get(`${process.env.REACT_APP_API_URL}/transactions/${transactionId}`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          // console.log(response.data.user)
+          // console.log(response.data.transaction)
           setTransaction(response.data.transaction);
           setIsLoading(false);
           // setGlobalState((prevState) => ({
@@ -101,7 +101,7 @@ const TransactionDetails = () => {
   }
 
   const handleBack = () => {
-    navigate(-1);  // Go back to the previous page
+    window.location.href = "/admin/transactions" 
   };
 
   const getFileUrl = (path) => {
@@ -263,7 +263,7 @@ const TransactionDetails = () => {
                                       Processing
                                     </span>
                                   ) : transaction.status === "cancelled" ? (
-                                    <span className="badge badge--warning">
+                                    <span className="badge badge--danger">
                                       Cancelled
                                     </span>
                                   ) : (
@@ -326,7 +326,7 @@ const TransactionDetails = () => {
                     icon={"fas fa-check-circle"}
                     setIsLoading={setIsLoading}
                     redirectTo={"transactions"}
-                  
+                    transaction={transaction}
                   />
                 )}
                   
@@ -362,7 +362,7 @@ const TransactionDetails = () => {
                     icon={"fas fa-times-circle"}
                     setIsLoading={setIsLoading}
                     redirectTo={"transactions"}
-                  
+                    transaction={transaction}
                   />
 
                       </div>

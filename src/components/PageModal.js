@@ -50,12 +50,12 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
             "Success",
             response.data.message
           );
-          console.log("response.data :>> ", response.data);
+          // console.log("response.data :>> ", response.data);
           // setPassword("");
           // setConfirmPassword("");
 
           setTimeout(() => {
-            window.location.href = `/admin/${redirectTo}`;
+            window.location.href = `/admin/${redirectTo}/details/${transaction?._id}`;
           }, 2000);
         }
       })

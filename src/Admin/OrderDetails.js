@@ -151,6 +151,12 @@ const OrderDetails = () => {
                       <span className="fw-bold">Order Type</span>
                       <span className="d-block fw-bold">{order.action === 'deposit' ? 'Deposit' : 'Withdrawal'}</span>
                     </li>
+                    {order.quote && (
+                      <li className="list-group-item d-flex justify-content-between flex-wrap">
+                      <span className="fw-bold">Order for</span>
+                      <span className="d-block fw-bold">{order.quote}</span>
+                    </li>
+                    )}
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Reference ID</span>
                       <span className="d-block fw-bold">{order.referenceId ? order.referenceId : 'No Reference ID'}</span>
