@@ -287,6 +287,7 @@ const OrderDetails = () => {
                   icon={"fas fa-check"}
                   setIsLoading={setIsLoading}
                   redirectTo={"orders"}
+                  transaction={order}
                 
                 />
   
