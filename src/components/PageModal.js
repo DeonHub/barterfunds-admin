@@ -4,7 +4,7 @@ import { Modal, Button } from "antd";
 import openNotification from "./OpenNotification";
 import axios from "axios";
 
-const PageModal = ({ title, content, updateUrl, status, action, className, icon, setIsLoading, redirectTo, disabled, comments, transaction }) => {
+const PageModal = ({ title, content, updateUrl, status, action, className, icon, setIsLoading, redirectTo, disabled, comments, transaction, twoFactorAuth }) => {
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
@@ -33,9 +33,10 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
         }
 
     const body ={
-      status: status,
+      status: status ? status : "",
       comments: comments ? comments : "",
-      action: action ? action : ''
+      action: action ? action : '',
+      twoFactorAuth: transaction?.twoFactorAuth ? false : ''
     }
 
 
@@ -55,7 +56,12 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
           // setConfirmPassword("");
 
           setTimeout(() => {
-            window.location.href = `/admin/${redirectTo}/details/${transaction?._id}`;
+            if(action === 'delete'){ 
+              window.location.href = `/admin/${redirectTo}`
+            } 
+            else{ 
+              window.location.href = `/admin/${redirectTo}/details/${transaction?._id}`
+            };
           }, 2000);
         }
       })
