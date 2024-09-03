@@ -444,6 +444,7 @@ const KycDetails = () => {
                                     icon={"las la-user-check"}
                                     setIsLoading={setIsLoading}
                                     redirectTo={"kycs"}
+                                    transaction={kyc}
                                   />
                                 </div>
 
@@ -462,6 +463,7 @@ const KycDetails = () => {
                                     icon={"las la-user-times"}
                                     setIsLoading={setIsLoading}
                                     redirectTo={"kycs"}
+                                    transaction={kyc}
                                   />
                                 </div>
                                 {kyc.status === "rejected" ? (
@@ -479,6 +481,7 @@ const KycDetails = () => {
                                       icon={"las la-user-slash"}
                                       setIsLoading={setIsLoading}
                                       redirectTo={"kycs"}
+                                      
                                     />
                                   </div>
                                 ) : (

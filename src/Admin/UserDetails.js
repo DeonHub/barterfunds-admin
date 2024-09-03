@@ -347,15 +347,23 @@ const UserDetails = () => {
                         <hr />
                         <div className="d-flex flex-wrap gap-3 mt-4 mb-4">
                           <div className="flex-fill">
-                            <a
-                              href="admin/report/login/history?search=hearning"
-                              className="btn btn--primary btn--shadow w-100 btn-lg"
-                            >
-                              <i className="las la-list-alt" />
-                              Logins
-                            </a>
+                          <PageModal
+                                title={"Reset 2FA"}
+                                content={
+                                  "Users 2FA will be reset. Are you sure you want to reset user 2FA?"
+                                }
+                                action={"reset"}
+                                updateUrl={`${process.env.REACT_APP_API_URL}/users/${user._id}`}
+                                className={
+                                  "btn btn--primary btn--shadow w-100 btn-lg"
+                                }
+                                twoFactorAuth={false}
+                                icon={"las la-shield-alt"}
+                                setIsLoading={setIsLoading}
+                                redirectTo={"users"}
+                                transaction={user}
+                              />
                           </div>
-                         
 
                           <div className="flex-fill">
                             {user.status === "inactive" ? (
@@ -373,6 +381,7 @@ const UserDetails = () => {
                                 icon={"las la-user-check"}
                                 setIsLoading={setIsLoading}
                                 redirectTo={"users"}
+                                transaction={user}
                               />
                             ) : (
                               <PageModal
@@ -389,7 +398,7 @@ const UserDetails = () => {
                                 status={"inactive"}
                                 setIsLoading={setIsLoading}
                                 redirectTo={"users"}
-
+                                transaction={user}
                               />
                             )}
                           </div>
@@ -409,7 +418,7 @@ const UserDetails = () => {
                                 icon={"las la-user-cog"}
                                 setIsLoading={setIsLoading}
                                 redirectTo={"users"}
-
+                                transaction={user}
                               />
                             ) : (
                               <PageModal
@@ -426,7 +435,7 @@ const UserDetails = () => {
                                 icon={"las la-ban"}
                                 setIsLoading={setIsLoading}
                                 redirectTo={"users"}
-
+                                transaction={user}
                               />
                             )}
                           </div>
@@ -444,7 +453,7 @@ const UserDetails = () => {
                               icon={"las la-user-times"}
                               setIsLoading={setIsLoading}
                               redirectTo={"users"}
-
+                              transaction={user}
                             />
                           </div>
                         </div>
