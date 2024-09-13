@@ -445,7 +445,7 @@ const UserDetails = () => {
                               content={
                                 "User won't be able to access his/her dashboard. Are you sure you want to remove user?"
                               }
-                              action={"remove"}
+                              action={"delete"}
                               updateUrl={`${process.env.REACT_APP_API_URL}/users/${user._id}`}
                               className={
                                 "btn btn--primary btn--shadow w-100 btn-lg"
