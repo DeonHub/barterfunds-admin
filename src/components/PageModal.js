@@ -36,32 +36,26 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
       status: status ? status : "",
       comments: comments ? comments : "",
       action: action ? action : '',
-      twoFactorAuth: transaction?.twoFactorAuth ? false : ''
+      twoFactorAuth: transaction?.twoFactorAuth ? false : false
     }
 
-
-    axios
-    .patch(updateUrl, body, { headers: headers})
+    if(action === 'delete'){
+      axios
+    .delete(updateUrl, { headers: headers})
       .then((response) => {
         if (response.data.success) {
-          // setMessage('Login Successfully')
+          
           openNotification(
             "topRight",
             "success",
             "Success",
-            response.data.message
+            "User removed successfully"
           );
-          // console.log("response.data :>> ", response.data);
-          // setPassword("");
-          // setConfirmPassword("");
+          
 
           setTimeout(() => {
-            if(action === 'delete'){ 
-              window.location.href = `/admin/${redirectTo}`
-            } 
-            else{ 
-              window.location.href = `/admin/${redirectTo}/details/${transaction?._id}`
-            };
+            window.location.href = `/admin/${redirectTo}`
+            
           }, 2000);
         }
       })
@@ -75,6 +69,41 @@ const PageModal = ({ title, content, updateUrl, status, action, className, icon,
         
         console.log("error :>> ", error.response.data.message);
       });
+    }
+    else{
+      axios
+      .patch(updateUrl, body, { headers: headers})
+        .then((response) => {
+          if (response.data.success) {
+            // setMessage('Login Successfully')
+            openNotification(
+              "topRight",
+              "success",
+              "Success",
+              response.data.message
+            );
+            // console.log("response.data :>> ", response.data);
+            // setPassword("");
+            // setConfirmPassword("");
+  
+            setTimeout(() => {
+                window.location.href = `/admin/${redirectTo}/details/${transaction?._id}`
+            }, 2000);
+          }
+        })
+        .catch((error) => {
+          openNotification(
+            "topRight",
+            "error",
+            "Error",
+            error.response.data.message
+          );
+          
+          console.log("error :>> ", error.response.data.message);
+        });
+    }
+
+    
     setOpen(false);
   };
 
