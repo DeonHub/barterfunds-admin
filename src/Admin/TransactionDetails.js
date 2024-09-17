@@ -203,7 +203,7 @@ const TransactionDetails = () => {
                       <span className="fw-bold">Amount Paid</span>
                       <div className="text-end">
                       <span className="d-block fw-bold">{formatCurrency(transaction.amountGhs)} GHS</span>
-                            {/* <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span> */}
+                            <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span>
                       </div>
                     </li>
                     {/* <li className="list-group-item d-flex justify-content-between flex-wrap">

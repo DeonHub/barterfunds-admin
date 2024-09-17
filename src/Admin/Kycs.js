@@ -164,11 +164,11 @@ const Kycs = () => {
                                   </span>
                                   <br />
                                   <span className="small">
-                                  {kyc.userId.status === "active" ? (
+                                  {kyc?.userId?.status === "active" ? (
                                     <span className="badge badge--success">
                                       Active
                                     </span>
-                                  ) : kyc.userId.status === "blocked" ? (
+                                  ) : kyc?.userId?.status === "blocked" ? (
                                     <span className="badge badge--warning">
                                       Blocked
                                     </span>
