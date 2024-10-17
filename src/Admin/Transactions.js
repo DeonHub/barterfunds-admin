@@ -220,7 +220,7 @@ const Transactions = () => {
                           </td>
                           <td>
                             <span className="d-block">{formatCurrency(transaction.amountGhs)} GHS</span>
-                            <span>{formatCurrency(transaction.amountUsd)} USD</span>
+                            <span>{formatCurrency(transaction.amountUsd)} {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}</span>
                           </td>
 
                           <td>
