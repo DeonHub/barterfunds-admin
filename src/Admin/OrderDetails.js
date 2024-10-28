@@ -305,6 +305,7 @@ const OrderDetails = () => {
                   icon={"fas fa-times-circle"}
                   setIsLoading={setIsLoading}
                   redirectTo={"orders"}
+                  transaction={order}
                 
                 />
                       

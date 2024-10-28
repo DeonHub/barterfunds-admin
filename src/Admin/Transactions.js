@@ -219,7 +219,7 @@ const Transactions = () => {
                             <span className="text--primary">{transaction.currencyId ? transaction.currencyId.currencyName : 'Bitcoin (BTC)'}</span>
                           </td>
                           <td>
-                            <span className="d-block">{formatCurrency(transaction.amountGhs)} GHS</span>
+                            <span className="d-block">{transaction?.transactionType === 'receive' ? (formatCurrency(Number(transaction?.amountGhs) - Number(transaction?.transactionFee * transaction?.exchangeRate))) : (formatCurrency(transaction.amountGhs))} GHS</span>
                             <span>{formatCurrency(transaction.amountUsd)} {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}</span>
                           </td>
 
