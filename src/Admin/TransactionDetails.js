@@ -202,7 +202,7 @@ const TransactionDetails = () => {
                     <li className="list-group-item d-flex justify-content-between flex-wrap">
                       <span className="fw-bold">Amount Paid</span>
                       <div className="text-end">
-                      <span className="d-block fw-bold">{formatCurrency(transaction.amountGhs)} GHS</span>
+                      <span className="d-block fw-bold">{transaction?.transactionType === 'receive' ? (formatCurrency(Number(transaction?.amountGhs) - Number(transaction?.transactionFee * transaction?.exchangeRate))) : (formatCurrency(transaction.amountGhs))} GHS</span>
                             <span className="d-block fw-bold">{formatCurrency(transaction.amountUsd)} USD</span>
                       </div>
                     </li>
